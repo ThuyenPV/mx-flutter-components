@@ -10,6 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  mx_crypto_repository:
+    path: ../mx_crypto_repository
+
+  mx_share_api:
+    path: ../mx_share_api
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
