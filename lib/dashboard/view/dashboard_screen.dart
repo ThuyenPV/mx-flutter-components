@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
-import 'package:mx_flutter_components/home/home.dart';
+import 'package:mx_flutter_components/dashboard/cubit/dashboard_cubit.dart';
 import 'package:mx_flutter_components/l10n/l10n.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
-  static const route = "HOME_SCREEN";
+  static const route = "DASHBOARD_SCREEN";
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(),
-      child: const HomeView(),
+      create: (_) => DashboardCubit(),
+      child: const DashboardView(),
     );
   }
 }
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class DashboardView extends StatefulWidget {
+  const DashboardView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<DashboardView> createState() => _DashboardViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _DashboardViewState extends State<DashboardView> {
   static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

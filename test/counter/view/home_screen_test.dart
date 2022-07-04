@@ -3,63 +3,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mx_flutter_components/home/home.dart';
+import 'package:mx_flutter_components/dashboard/home.dart';
+import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
 
 import '../../helpers/helpers.dart';
 
-class MockHomeCubit extends MockCubit<int> implements HomeCubit {}
+class MockHomeCubit extends MockCubit<int> implements DashboardCubit {}
 
 void main() {
-  group('HomeScreen', () {
+  group('DashboardScreen', () {
     testWidgets('renders HomeView', (tester) async {
-      await tester.pumpApp(const HomeScreen());
-      expect(find.byType(HomeView), findsOneWidget);
+      await tester.pumpApp(const DashboardScreen());
+      expect(find.byType(DashboardView), findsOneWidget);
     });
   });
 
   group('HomeView', () {
-    late HomeCubit homeCubit;
+    late DashboardCubit dashboardCubit;
 
     setUp(() {
-      homeCubit = MockHomeCubit();
+      dashboardCubit = MockHomeCubit();
     });
 
     testWidgets('renders current count', (tester) async {
       const state = 42;
-      when(() => homeCubit.state).thenReturn(state);
+      when(() => dashboardCubit.state).thenReturn(state);
       await tester.pumpApp(
         BlocProvider.value(
-          value: homeCubit,
-          child: const HomeView(),
+          value: dashboardCubit,
+          child: const DashboardScreen(),
         ),
       );
       expect(find.text('$state'), findsOneWidget);
     });
 
     testWidgets('calls increment when increment button is tapped', (tester) async {
-      when(() => homeCubit.state).thenReturn(0);
-      when(() => homeCubit.increment()).thenReturn(null);
+      when(() => dashboardCubit.state).thenReturn(0);
+      when(() => dashboardCubit.increment()).thenReturn(null);
       await tester.pumpApp(
         BlocProvider.value(
-          value: homeCubit,
-          child: const HomeView(),
+          value: dashboardCubit,
+          child: const DashboardView(),
         ),
       );
       await tester.tap(find.byIcon(Icons.add));
-      verify(() => homeCubit.increment()).called(1);
+      verify(() => dashboardCubit.increment()).called(1);
     });
 
     testWidgets('calls decrement when decrement button is tapped', (tester) async {
-      when(() => homeCubit.state).thenReturn(0);
-      when(() => homeCubit.decrement()).thenReturn(null);
+      when(() => dashboardCubit.state).thenReturn(0);
+      when(() => dashboardCubit.decrement()).thenReturn(null);
       await tester.pumpApp(
         BlocProvider.value(
-          value: homeCubit,
-          child: const HomeView(),
+          value: dashboardCubit,
+          child: const DashboardView(),
         ),
       );
       await tester.tap(find.byIcon(Icons.remove));
-      verify(() => homeCubit.decrement()).called(1);
+      verify(() => dashboardCubit.decrement()).called(1);
     });
   });
 }
