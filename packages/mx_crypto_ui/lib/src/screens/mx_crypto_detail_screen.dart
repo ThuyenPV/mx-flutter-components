@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mx_crypto_ui/src/screens/components/crypto_detail_list.dart';
-import 'package:mx_crypto_ui/src/screens/components/crypto_chart.dart';
-import 'package:mx_crypto_ui/src/screens/components/header.dart';
+import 'package:mx_crypto_ui/src/components/crypto_chart.dart';
+import 'package:mx_crypto_ui/src/components/crypto_detail_list.dart';
+import 'package:mx_crypto_ui/src/components/header.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
 /// {@template mx_crypto_detail_screen}
@@ -43,9 +43,7 @@ class MxCryptoDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
-            Header(
-              crypto: args,
-            ),
+            Header(crypto: args),
             const CryptoChart(),
             const CryptoDetailList(),
           ],
