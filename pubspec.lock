@@ -106,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.1"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -156,6 +163,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.4"
   http_multi_server:
     dependency: transitive
     description:
@@ -233,10 +247,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  mx_crypto_repository:
+    dependency: transitive
+    description:
+      path: "packages/mx_crypto_repository"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   mx_crypto_ui:
     dependency: "direct main"
     description:
       path: "packages/mx_crypto_ui"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  mx_share_api:
+    dependency: transitive
+    description:
+      path: "packages/mx_share_api"
       relative: true
     source: path
     version: "1.0.0+1"

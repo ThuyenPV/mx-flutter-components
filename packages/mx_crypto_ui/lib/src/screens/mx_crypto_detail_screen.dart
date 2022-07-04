@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mx_crypto_ui/src/screens/components/coin_list.dart';
+import 'package:mx_crypto_ui/src/screens/components/crypto_detail_list.dart';
 import 'package:mx_crypto_ui/src/screens/components/crypto_chart.dart';
 import 'package:mx_crypto_ui/src/screens/components/header.dart';
+import 'package:mx_share_api/mx_share_api.dart';
 
 /// {@template mx_crypto_detail_screen}
 /// mx_crypto_detail_screen to display all detail crypto information
@@ -15,6 +16,8 @@ class MxCryptoDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Crypto;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
@@ -40,13 +43,11 @@ class MxCryptoDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
-            const Header(),
-            CryptoChart(
-              onTap: () {
-                Navigator.pushNamed(context, MxCryptoDetailScreen.route);
-              },
+            Header(
+              crypto: args,
             ),
-            const CoinList(),
+            const CryptoChart(),
+            const CryptoDetailList(),
           ],
         ),
       ),

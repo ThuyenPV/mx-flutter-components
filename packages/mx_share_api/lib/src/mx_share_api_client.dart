@@ -45,13 +45,13 @@ class MxShareApiClient {
 
   /// Fetches all coin list from coingecko API.
   ///
-  /// REST call: `GET /api/v3/coins/list`
-  Future<List<Coin>> fetchAllCoinList() async {
-    final uri = Uri.https(authority, '/api/v3/coins/list');
+  /// REST call: `GET /api/v3/coins/markets`
+  Future<List<Crypto>> fetchAllCoins(Map<String, dynamic>? queryParameters) async {
+    final uri = Uri.https(authority, '/api/v3/coins/markets', queryParameters);
     final response = await _get(uri);
-
     try {
-      return response.map((dynamic coinJson) => Coin.fromJson(coinJson as Map<String, dynamic>)).toList();
+      final result = response.map((dynamic coinJson) => Crypto.fromJson(coinJson as Map<String, dynamic>)).toList();
+      return result;
     } catch (_) {
       throw JsonDeserializationException();
     }

@@ -10,9 +10,9 @@ class SearchException implements Exception {}
 /// A Dart class which exposes methods to implement coin-list-related
 /// functionality.
 /// {@endtemplate}
-class MxCoinRepository {
+class MxCryptoRepository {
   /// {@macro mx_coin_repository}
-  MxCoinRepository({
+  MxCryptoRepository({
     MxShareApiClient? mxShareApiClient,
   }) : mxShareApiClient = mxShareApiClient ?? MxShareApiClient();
 
@@ -21,9 +21,10 @@ class MxCoinRepository {
   /// Returns a list of all coin list from coingecko API
   ///
   /// Throws a [CoinListException] if an error occurs.
-  Future<List<Coin>> fetchAllRockets() {
+  Future<List<Crypto>> fetchAllCoins(Map<String, dynamic>? queryParameters) async {
     try {
-      return mxShareApiClient.fetchAllCoinList();
+      final result = await mxShareApiClient.fetchAllCoins(queryParameters);
+      return result;
     } on Exception {
       throw CoinListException();
     }

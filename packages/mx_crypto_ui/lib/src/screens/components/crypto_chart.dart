@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
+/// {@template crypto_chart}
+/// A Crypto Chart
+/// {@endtemplate}
 class CryptoChart extends StatelessWidget {
-  const CryptoChart({
-    Key? key,
-    this.onTap,
-    this.color,
-  }) : super(key: key);
+  /// {@macro crypto_chart}
+  const CryptoChart({super.key, this.onTap, this.color});
 
+  /// {@macro Event when user clicks on crypto chart}
   final GestureTapCallback? onTap;
+
+  /// {@macro Change background color for crypto chart}
   final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(top: 8, bottom: 16),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -21,9 +25,11 @@ class CryptoChart extends StatelessWidget {
         child: Container(
           height: 300,
           decoration: BoxDecoration(
-            color: color ?? Colors.grey.withOpacity(0.25),
+            color: color ?? Colors.grey.withOpacity(0.15),
             borderRadius: BorderRadius.circular(8),
           ),
+          alignment: Alignment.center,
+          child: const Text('CHART HERE'),
         ),
       ),
     );

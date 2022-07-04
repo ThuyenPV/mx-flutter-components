@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-/// {@template CointList}
-/// A Coint List
+/// {@template crypto_detail_list}
+/// A Crypto Detail List
 /// {@endtemplate}
-class CoinList extends StatelessWidget {
-  /// {@macro crypto_categories}
-  const CoinList({super.key});
+class CryptoDetailList extends StatelessWidget {
+  /// {@macro crypto_detail_list}
+  const CryptoDetailList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
         itemCount: 10,
-        shrinkWrap: true,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           return Card(
             child: Container(
@@ -22,18 +22,10 @@ class CoinList extends StatelessWidget {
                 leading: CircleAvatar(
                   backgroundColor: Colors.grey.withOpacity(0.25),
                 ),
-                title: Container(
-                  height: 20,
-                  width: 100,
+                title: Container(height: 30),
+                subtitle: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
-                subtitle: Container(
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.25),
+                    color: Colors.red,
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
@@ -41,7 +33,6 @@ class CoinList extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (_, __) => const SizedBox(height: 12),
       ),
     );
   }
