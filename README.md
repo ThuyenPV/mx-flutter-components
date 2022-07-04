@@ -60,7 +60,7 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
     "@@locale": "en",
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Home Screen"
+        "description": "Text shown in the AppBar of the Dashboard Screen"
     }
 }
 ```
@@ -72,7 +72,7 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
     "@@locale": "en",
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Home Screen"
+        "description": "Text shown in the AppBar of the Dashboard Screen"
     },
     "helloWorld": "Hello World",
     "@helloWorld": {
@@ -129,7 +129,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
     "@@locale": "en",
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Home Screen"
+        "description": "Text shown in the AppBar of the Dashboard Screen"
     }
 }
 ```

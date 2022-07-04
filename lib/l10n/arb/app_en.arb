@@ -2,6 +2,6 @@
     "@@locale": "en",
     "counterAppBarTitle": "Home",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Home Screen"
+        "description": "Text shown in the AppBar of the Dashboard Screen"
     }
 }

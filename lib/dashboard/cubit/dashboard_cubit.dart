@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-class HomeCubit extends Cubit<int> {
-  HomeCubit() : super(0);
+class DashboardCubit extends Cubit<int> {
+  DashboardCubit() : super(0);
 
   void increment() => emit(state + 1);
 

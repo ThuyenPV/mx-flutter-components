@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mx_flutter_components/config/app_router.dart';
-import 'package:mx_flutter_components/home/view/home_screen.dart';
+import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
 import 'package:mx_flutter_components/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomeScreen(),
+      home: const DashboardScreen(),
     );
   }
 }
