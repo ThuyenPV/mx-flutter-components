@@ -57,7 +57,10 @@ class _HomeViewState extends State<HomeView> {
             DrawerWidget(
               color: Colors.lightBlue,
               onTap: () {
+                /// Handling close drawer menu first
                 Navigator.pop(context);
+
+                /// Navigate to MxCryptoScreen of mx_crypto_ui package
                 Navigator.pushNamed(context, MxCryptoScreen.route);
               },
             ),

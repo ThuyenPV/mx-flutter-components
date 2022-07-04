@@ -18,14 +18,9 @@ class Categories extends StatelessWidget {
         itemBuilder: (context, index) {
           return const Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
             ),
-            child: SizedBox(
-              height: 50,
-              width: 100,
-            ),
+            child: SizedBox(height: 50, width: 100),
           );
         },
       ),

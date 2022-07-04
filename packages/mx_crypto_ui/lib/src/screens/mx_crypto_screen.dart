@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mx_crypto_ui/src/screens/components/categories.dart';
-import 'package:mx_crypto_ui/src/screens/components/coin_list.dart';
+import 'package:mx_crypto_ui/src/screens/components/crypto_list.dart';
 import 'package:mx_crypto_ui/src/screens/components/crypto_chart.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto_detail_screen.dart';
 
@@ -38,12 +38,9 @@ class MxCryptoScreen extends StatelessWidget {
           children: [
             const Categories(),
             CryptoChart(
-              color: Colors.lightBlue,
-              onTap: () {
-                Navigator.pushNamed(context, MxCryptoDetailScreen.route);
-              },
+              onTap: () => Navigator.pushNamed(context, MxCryptoDetailScreen.route),
             ),
-            const CoinList(),
+            const CryptoList(),
           ],
         ),
       ),
