@@ -44,6 +44,7 @@ class _DashboardViewState extends State<DashboardView> {
         backgroundColor: Colors.transparent,
         actions: [
           InkWell(
+            key: ValueKey('avatar-key'),
             onTap: () {
               _scaffoldKey.currentState?.openEndDrawer();
             },
@@ -75,6 +76,7 @@ class _DashboardViewState extends State<DashboardView> {
             DrawerWidget(),
             DrawerWidget(),
             DrawerWidget(
+              key: ValueKey('view-listed-crypto-item'),
               color: Colors.blue.withOpacity(0.5),
               onTap: () {
                 /// Handling close drawer menu first

@@ -12,18 +12,16 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => ListTile(
-        onTap: onTap,
-        leading: CircleAvatar(
-          backgroundColor: color ?? Colors.grey.withOpacity(0.25),
-        ),
-        title: Container(
-          height: 30,
-          decoration: BoxDecoration(
-            color: color ?? Colors.grey.withOpacity(0.25),
-            borderRadius: BorderRadius.circular(30),
-          ),
+    return ListTile(
+      onTap: onTap,
+      leading: CircleAvatar(
+        backgroundColor: color ?? Colors.grey.withOpacity(0.25),
+      ),
+      title: Container(
+        height: 30,
+        decoration: BoxDecoration(
+          color: color ?? Colors.grey.withOpacity(0.25),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
     );

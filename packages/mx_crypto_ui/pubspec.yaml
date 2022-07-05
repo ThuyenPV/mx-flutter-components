@@ -17,6 +17,8 @@ dependencies:
     path: ../mx_share_api
 
 dev_dependencies:
+  bloc_test: ^9.0.3
   flutter_test:
     sdk: flutter
   very_good_analysis: ^3.0.1
+

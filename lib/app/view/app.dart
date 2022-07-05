@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case DashboardScreen.route:
-            return PageRouteUtil.slideRouteBuilder(settings, MxCryptoScreen());
+            return PageRouteUtil.slideRouteBuilder(settings, MxCryptoScreen(key: ValueKey('mx-crypto-screen'),));
           case MxCryptoScreen.route:
             return PageRouteUtil.slideRouteBuilder(settings, MxCryptoDetailScreen());
           case MxCryptoDetailScreen.route:
