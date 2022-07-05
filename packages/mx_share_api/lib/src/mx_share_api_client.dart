@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-import 'package:mx_share_api/src/models/coin.dart';
+import 'package:mx_share_api/src/models/crypto.dart';
 
 /// Thrown if an exception occurs while making an `http` request.
 class HttpException implements Exception {}
 
 /// {@template http_request_failure}
 /// Thrown if an `http` request returns a non-200 status code.
-/// {@endtemplate}
+/// {@contemplate}
 class HttpRequestFailure implements Exception {
   /// {@macro http_request_failure}
   const HttpRequestFailure(this.statusCode);
@@ -26,9 +26,9 @@ class JsonDecodeException implements Exception {}
 class JsonDeserializationException implements Exception {}
 
 /// {@template mx_share_api_client}
-/// A Dart API Client for the spacex REST API.
+/// A Dart API Client for the Coingecko REST API.
 /// Learn more at https://api.coingecko.com/api/v3
-/// {@endtemplate}
+/// {@contemplate}
 class MxShareApiClient {
   /// {@macro spacex_api_client}
   MxShareApiClient({
@@ -50,7 +50,11 @@ class MxShareApiClient {
     final uri = Uri.https(authority, '/api/v3/coins/markets', queryParameters);
     final response = await _get(uri);
     try {
-      return response.map((coinJson) => Crypto.fromJson(coinJson as Map<String, dynamic>)).toList();
+      final cryptoList = response.map((cryptoJson) {
+        return Crypto.fromJson(cryptoJson as Map<String, dynamic>);
+      }).toList();
+
+      return cryptoList;
     } catch (_) {
       throw JsonDeserializationException();
     }

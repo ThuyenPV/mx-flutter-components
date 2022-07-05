@@ -9,7 +9,7 @@ import 'package:mx_share_api/mx_share_api.dart';
 /// {@endtemplate}
 class MxCryptoDetailScreen extends StatelessWidget {
   /// {@macro mx_crypto_detail_screen}
-  const MxCryptoDetailScreen({Key? key}) : super(key: key);
+  const MxCryptoDetailScreen({super.key});
 
   /// {@macro to navigator to mx_crypto_detail_screen screen}
   static const route = 'MX_CRYPTO_DETAIL_SCREEN';

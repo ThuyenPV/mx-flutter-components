@@ -3,11 +3,11 @@ import 'package:mx_crypto_repository/mx_crypto_repository.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto_detail_screen.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
-/// {@template CointList}
-/// A Coint List
-/// {@endtemplate}
+/// {@template crypto_list}
+/// A Dart class that exposes implement Crypto List UI
+/// {@contemplate}
 class CryptoList extends StatefulWidget {
-  /// {@macro crypto_categories}
+  /// {@macro crypto_list}
   const CryptoList({super.key});
 
   @override
@@ -68,14 +68,21 @@ class _CryptoListState extends State<CryptoList> {
   }
 }
 
+/// {@template crypto_item}
+/// A Dart class that exposes implement Crypto Item UI
+/// {@contemplate}
 class CryptoItem extends StatelessWidget {
+  /// {@macro crypto_item}
   const CryptoItem({
-    Key? key,
+    super.key,
     required this.crypto,
     required this.onTap,
-  }) : super(key: key);
+  });
 
+  /// The crypto model to display for each crypto_item
   final Crypto crypto;
+
+  /// Event when use click into crypto_item
   final GestureTapCallback? onTap;
 
   @override
@@ -106,8 +113,12 @@ class CryptoItem extends StatelessWidget {
   }
 }
 
+/// {@template loading_widget}
+/// A Dart class that exposes implement circle loading when call load 10 crypto
+/// {@contemplate}
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+  /// {@macro loading_widget}
+  const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

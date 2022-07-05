@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// {@template crypto_chart}
-/// A Crypto Chart
-/// {@endtemplate}
+/// A Dart class that exposes implement Crypto Chart UI
+/// {@contemplate}
 class CryptoChart extends StatelessWidget {
   /// {@macro crypto_chart}
   const CryptoChart({
@@ -12,13 +12,13 @@ class CryptoChart extends StatelessWidget {
     required this.title,
   });
 
-  /// {@macro Event when user clicks on crypto chart}
+  /// {@macro event when user clicks on crypto chart}
   final GestureTapCallback? onTap;
 
-  /// {@macro Change background color for crypto chart}
+  /// {@macro change background color for crypto chart}
   final Color? color;
 
-  /// {@macro Change background color for crypto chart}
+  /// {@macro change center title for crypto chart}
   final String title;
 
   @override

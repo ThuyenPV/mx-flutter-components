@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// {@template crypto_detail_list}
-/// A Crypto Detail List
+/// A Dart class that exposes implement Crypto Detail List UI
 /// {@endtemplate}
 class CryptoDetailList extends StatelessWidget {
   /// {@macro crypto_detail_list}
@@ -25,7 +25,7 @@ class CryptoDetailList extends StatelessWidget {
                 title: Container(height: 30),
                 subtitle: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Colors.grey.withOpacity(0.25),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),

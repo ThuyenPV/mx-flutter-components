@@ -1,15 +1,14 @@
 import 'package:mx_share_api/mx_share_api.dart';
 
 /// Thrown when an error occurs while looking up rockets.
-class CoinListException implements Exception {}
+class CryptoListException implements Exception {}
 
 /// Thrown when an error occurs while performing a search.
 class SearchException implements Exception {}
 
 /// {@template mx_coin_repository}
-/// A Dart class which exposes methods to implement coin-list-related
-/// functionality.
-/// {@endtemplate}
+/// A Dart class that exposes methods to call mx_share_api layer
+/// {@contemplate}
 class MxCryptoRepository {
   /// {@macro mx_coin_repository}
   MxCryptoRepository({
@@ -20,13 +19,13 @@ class MxCryptoRepository {
 
   /// Returns a list of all coin list from coingecko API
   ///
-  /// Throws a [CoinListException] if an error occurs.
+  /// Throws a [CryptoListException] if an error occurs.
   Future<List<Crypto>> fetchAllCoins(Map<String, dynamic>? queryParameters) async {
     try {
-      final result = await mxShareApiClient.fetchAllCoins(queryParameters);
-      return result;
+      final cryptoList = await mxShareApiClient.fetchAllCoins(queryParameters);
+      return cryptoList;
     } on Exception {
-      throw CoinListException();
+      throw CryptoListException();
     }
   }
 }

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
+/// {@template header}
+/// A Dart class that exposes implement Header UI
+/// {@endtemplate}
 class Header extends StatelessWidget {
+  /// {@macro header}
   const Header({
-    Key? key,
+    super.key,
     required this.crypto,
-  }) : super(key: key);
+  });
 
+  /// The crypto model to display for Header UI
   final Crypto crypto;
 
   @override
