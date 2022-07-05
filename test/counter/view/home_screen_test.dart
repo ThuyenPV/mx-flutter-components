@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mx_flutter_components/dashboard/home.dart';
+import 'package:mx_flutter_components/dashboard/dashboard.dart';
 import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
 
 import '../../helpers/helpers.dart';

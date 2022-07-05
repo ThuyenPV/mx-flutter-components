@@ -26,7 +26,7 @@ class Crypto extends Equatable {
   final String image;
 
   /// The current price
-  final double currentPrice;
+  final num currentPrice;
 
   /// Converts a JSON [Map] into a [Crypto] instance
   factory Crypto.fromJson(Map<String, dynamic> json) => Crypto(
@@ -34,7 +34,7 @@ class Crypto extends Equatable {
         symbol: json['symbol'] as String,
         name: json['name'] as String,
         image: json['image'] as String,
-        currentPrice: json['current_price'] as double,
+        currentPrice: json['current_price'] as num,
       );
 
   /// Converts this [Crypto] instance into a JSON [Map]

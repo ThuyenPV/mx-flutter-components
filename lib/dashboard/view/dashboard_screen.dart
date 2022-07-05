@@ -4,6 +4,12 @@ import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 import 'package:mx_flutter_components/dashboard/cubit/dashboard_cubit.dart';
 import 'package:mx_flutter_components/l10n/l10n.dart';
 
+import 'widgets/category_widget.dart';
+import 'widgets/chart_widget.dart';
+import 'widgets/dashboard_widget.dart';
+import 'widgets/drawer_widget.dart';
+import 'widgets/search_bar.dart';
+
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -34,7 +40,21 @@ class _DashboardViewState extends State<DashboardView> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(l10n.counterAppBarTitle),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          InkWell(
+            onTap: () {
+              _scaffoldKey.currentState?.openEndDrawer();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: CircleAvatar(
+                backgroundColor: Colors.blue.withOpacity(0.5),
+              ),
+            ),
+          ),
+        ],
       ),
       endDrawer: Drawer(
         elevation: 0,
@@ -55,7 +75,7 @@ class _DashboardViewState extends State<DashboardView> {
             DrawerWidget(),
             DrawerWidget(),
             DrawerWidget(
-              color: Colors.lightBlue,
+              color: Colors.blue.withOpacity(0.5),
               onTap: () {
                 /// Handling close drawer menu first
                 Navigator.pop(context);
@@ -67,34 +87,23 @@ class _DashboardViewState extends State<DashboardView> {
           ],
         ),
       ),
-      body: const Center(),
-    );
-  }
-}
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              /// Search Bar
+              SearchBar(),
 
-class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    Key? key,
-    this.onTap,
-    this.color,
-  }) : super(key: key);
+              /// Dashboard Widget
+              DashboardWidget(),
 
-  final GestureTapCallback? onTap;
-  final Color? color;
+              /// Category View
+              CategoryWidget(),
 
-  @override
-  Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => ListTile(
-        onTap: onTap,
-        leading: CircleAvatar(
-          backgroundColor: color ?? Colors.grey.withOpacity(0.25),
-        ),
-        title: Container(
-          height: 30,
-          decoration: BoxDecoration(
-            color: color ?? Colors.grey.withOpacity(0.25),
-            borderRadius: BorderRadius.circular(30),
+              /// Chart View
+              ChartWidget(),
+            ],
           ),
         ),
       ),

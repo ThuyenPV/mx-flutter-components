@@ -50,8 +50,7 @@ class MxShareApiClient {
     final uri = Uri.https(authority, '/api/v3/coins/markets', queryParameters);
     final response = await _get(uri);
     try {
-      final result = response.map((dynamic coinJson) => Crypto.fromJson(coinJson as Map<String, dynamic>)).toList();
-      return result;
+      return response.map((coinJson) => Crypto.fromJson(coinJson as Map<String, dynamic>)).toList();
     } catch (_) {
       throw JsonDeserializationException();
     }

@@ -31,9 +31,9 @@ class MxCryptoDetailScreen extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(top: 12, left: 12),
               alignment: Alignment.bottomLeft,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 90,
-                backgroundColor: Colors.lightBlue,
+                backgroundColor: Colors.blue.withOpacity(0.5),
               ),
             ),
           ),

@@ -35,12 +35,10 @@ class MxCryptoScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
-          children: [
-            const Categories(),
-            CryptoChart(
-              onTap: () => Navigator.pushNamed(context, MxCryptoDetailScreen.route),
-            ),
-            const CryptoList(),
+          children: const [
+            Categories(),
+            CryptoChart(),
+            CryptoList(),
           ],
         ),
       ),
