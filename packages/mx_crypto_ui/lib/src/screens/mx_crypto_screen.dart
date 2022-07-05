@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mx_crypto_ui/src/components/categories.dart';
 import 'package:mx_crypto_ui/src/components/crypto_chart.dart';
 import 'package:mx_crypto_ui/src/components/crypto_list.dart';
-import 'package:mx_crypto_ui/src/screens/mx_crypto_detail_screen.dart';
 
 /// {@template mx_crypto_screen}
 /// mx_crypto_screen to display all information about crypto & chart
@@ -37,7 +36,7 @@ class MxCryptoScreen extends StatelessWidget {
         child: Column(
           children: const [
             Categories(),
-            CryptoChart(),
+            CryptoChart(title: 'CRYPTO CHART'),
             CryptoList(),
           ],
         ),

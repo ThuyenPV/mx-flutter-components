@@ -27,7 +27,7 @@ class ChartWidget extends StatelessWidget {
               child: Container(
                 height: 200,
                 alignment: Alignment.center,
-                child: Text('CHART HERE'),
+                child: Text('DASHBOARD SCREEN'),
               ),
             )
           ],

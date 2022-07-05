@@ -44,7 +44,7 @@ class MxCryptoDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Header(crypto: args),
-            const CryptoChart(),
+            const CryptoChart(title: 'CRYPTO DETAIL CHART'),
             const CryptoDetailList(),
           ],
         ),

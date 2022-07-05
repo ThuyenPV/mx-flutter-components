@@ -5,13 +5,21 @@ import 'package:flutter/material.dart';
 /// {@endtemplate}
 class CryptoChart extends StatelessWidget {
   /// {@macro crypto_chart}
-  const CryptoChart({super.key, this.onTap, this.color});
+  const CryptoChart({
+    super.key,
+    this.onTap,
+    this.color,
+    required this.title,
+  });
 
   /// {@macro Event when user clicks on crypto chart}
   final GestureTapCallback? onTap;
 
   /// {@macro Change background color for crypto chart}
   final Color? color;
+
+  /// {@macro Change background color for crypto chart}
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,7 @@ class CryptoChart extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           alignment: Alignment.center,
-          child: const Text('CHART HERE'),
+          child: Text(title),
         ),
       ),
     );
