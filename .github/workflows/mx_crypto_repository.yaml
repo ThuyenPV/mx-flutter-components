@@ -20,13 +20,10 @@ jobs:
       - name: Install Dart
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: 2.14.2
+          sdk: 2.17.5
 
       - name: Install Dependencies
-        run: pub get
-
-      - name: Format
-        run: dartfmt --dry-run --set-exit-if-changed lib test
+        run: dart pub get
 
       - name: Analyze
         run: dart analyze --fatal-infos --fatal-warnings .

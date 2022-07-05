@@ -5,6 +5,7 @@ class ThreeDots extends StatelessWidget {
     Key? key,
     this.amountDots = 3,
   }) : super(key: key);
+
   final int amountDots;
 
   @override
