@@ -1,0 +1,35 @@
+name: mx_share_api
+
+on:
+  pull_request:
+    paths:
+      - "packages/mx_share_api/**"
+      - ".github/workflows/mx_share_api.yaml"
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: packages/mx_share_api
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.14.2
+
+      - name: Install Dependencies
+        run: pub get
+
+      - name: Format
+        run: dartfmt --dry-run --set-exit-if-changed lib test
+
+      - name: Analyze
+        run: dart analyze --fatal-infos --fatal-warnings .
+
+      - name: Run tests
+        run: dart test --coverage=coverage && pub run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
