@@ -48,4 +48,10 @@ class Crypto extends Equatable {
 
   @override
   List<Object?> get props => [id, symbol, name, image, currentPrice];
+
+  @override
+  bool? get stringify => true;
+
+  @override
+  String toString() => 'Crypto ($id, $name, $currentPrice)';
 }

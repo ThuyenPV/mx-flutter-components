@@ -19,3 +19,4 @@ dev_dependencies:
 
   very_good_analysis: ^3.0.1
   test: ^1.17.12
+  mocktail: ^0.3.0
