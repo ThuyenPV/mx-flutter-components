@@ -1,37 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mx_crypto_ui/mx_crypto_ui.dart';
+import 'package:mx_crypto_repository/mx_crypto_repository.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto/mx_crypto_screen.dart';
+import 'package:mx_share_api/mx_share_api.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:mx_crypto_repository/src/mx_crypto_repository.dart';
+
+class MockMxShareApiClient extends Mock implements MxShareApiClient {}
 
 void main() {
-  group('DashboardScreen', () {
-    testWidgets('renders MxCryptoDetailScreen', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: MxCryptoScreen()));
-      expect(find.byType(MxCryptoDetailScreen), findsOneWidget);
-    });
+  late MxShareApiClient mxShareApiClient;
+  late MxCryptoRepository mxCryptoRepository;
 
-    testWidgets('renders MxCryptoScreen', (tester) async {
-      await tester.pumpWidget(const MxCryptoScreen());
-      expect(find.byType(MxCryptoScreen), findsOneWidget);
-    });
+  const queryParameters = <String, dynamic>{
+    'vs_currency': 'usd',
+    'order': 'market_cap_desc',
+    'per_page': '10',
+    'page': '1',
+    'sparkline': 'false',
+  };
+
+  final cryptoList = List.generate(
+    3,
+    (index) => Crypto(
+      id: '$index',
+      symbol: 'btc',
+      name: 'Bitcoin',
+      image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+      currentPrice: 2999.0,
+    ),
+  );
+
+  setUp(() {
+    mxShareApiClient = MockMxShareApiClient();
+    when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+    mxCryptoRepository = MxCryptoRepository(mxShareApiClient: mxShareApiClient);
   });
 
-  group('HomeView', () {
-    testWidgets('renders current count', (WidgetTester tester) async {
-      await tester.pumpWidget(const MxCryptoScreen());
+  group('test', () {
+    setUp(() {
+      mxCryptoRepository = MxCryptoRepository();
+      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+    });
 
-      // final avatarFinder = find.byKey(ValueKey('avatar-key'));
-      // expect(avatarFinder, findsOneWidget);
-      // await tester.tap(avatarFinder);
-      // await tester.pump();
-      //
-      // final drawerFinder = find.byKey(ValueKey('view-listed-crypto-item'));
-      // expect(avatarFinder, findsOneWidget);
-      // await tester.tap(drawerFinder, warnIfMissed: false);
-      // await tester.pumpAndSettle();
-      // expect(MxCryptoScreen(), isNotNull);
-
-      // final cryptoScreen = find.byType(MxCryptoScreen);
-      // expect(cryptoScreen, findsOneWidget);
+    test('has route', () {
+      expect(MxCryptoScreen.route, isA<MaterialPageRoute<void>>());
     });
   });
 }
