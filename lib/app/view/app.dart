@@ -17,13 +17,13 @@ class App extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case DashboardScreen.route:
-            return PageRouteUtil.slideRouteBuilder(settings, MxCryptoScreen());
+            return PageRouteUtil.slideRouteBuilder(settings, const MxCryptoScreen());
           case MxCryptoScreen.route:
-            return PageRouteUtil.slideRouteBuilder(settings, MxCryptoDetailScreen());
+            return PageRouteUtil.slideRouteBuilder(settings, const MxCryptoDetailScreen());
           case MxCryptoDetailScreen.route:
-            return PageRouteUtil.slideRouteBuilder(settings, DashboardScreen());
+            return PageRouteUtil.slideRouteBuilder(settings, const DashboardScreen());
           default:
-            return MaterialPageRoute(builder: (_) => UnknownPage());
+            return MaterialPageRoute(builder: (_) => const UnknownPage());
         }
       },
       theme: ThemeData(
@@ -43,11 +43,11 @@ class App extends StatelessWidget {
 }
 
 class UnknownPage extends StatelessWidget {
-  const UnknownPage({Key? key}) : super(key: key);
+  const UnknownPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text('Page not found!'),
       ),

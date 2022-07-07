@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'three_dots.dart';
 
 class DashboardWidget extends StatelessWidget {
-  const DashboardWidget({Key? key}) : super(key: key);
+  const DashboardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,19 @@ class DashboardWidget extends StatelessWidget {
             ),
 
             /// Dashboard Items
-            DashboardWidgetItem(),
-            DashboardWidgetItem(),
-            DashboardWidgetItem(),
+            const DashboardWidgetItem(),
+            const DashboardWidgetItem(),
+            const DashboardWidgetItem(),
 
             /// Three-Dots View
-            ThreeDots(),
+            const ThreeDots(),
 
             /// Divider
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
               child: Divider(),
             ),
             Align(
-              alignment: Alignment.center,
               child: Container(
                 height: 30,
                 width: 200,
@@ -56,7 +55,7 @@ class DashboardWidget extends StatelessWidget {
 }
 
 class DashboardWidgetItem extends StatelessWidget {
-  const DashboardWidgetItem({Key? key}) : super(key: key);
+  const DashboardWidgetItem({super.key});
 
   @override
   Widget build(BuildContext context) {

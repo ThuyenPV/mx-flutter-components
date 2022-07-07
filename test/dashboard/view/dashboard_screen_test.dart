@@ -11,18 +11,22 @@ class MockDashboardCubit extends MockCubit<int> implements DashboardCubit {}
 void main() {
   late TestNavigatorObserver _navObserver;
 
+  /// Key
+  const drawerIconKey = ValueKey('drawer-icon-key');
+  const drawerItemKey = ValueKey('drawer-item-key');
+
   setUp(() {
     _navObserver = TestNavigatorObserver();
   });
 
   _dashboardView() {
     return TestMaterialApp(
-      home: DashboardScreen(),
+      home: const DashboardScreen(),
       navigatorObserver: _navObserver,
     );
   }
 
-  testWidgets("Renders dashboard screen", (tester) async {
+  testWidgets('renders dashboard screen', (tester) async {
     ///  given
 
     ///  when
@@ -32,9 +36,10 @@ void main() {
     expect(find.byType(DashboardView), findsOneWidget);
   });
 
-  testWidgets("Given dashboard screen then should be find the drawer menu icon", (tester) async {
+  testWidgets('should be find the drawer menu icon', (tester) async {
     ///  given
-    final drawerIconFinder = find.byKey(ValueKey('avatar-key'));
+    await tester.pumpWidget(_dashboardView());
+    final drawerIconFinder = find.byKey(drawerIconKey);
 
     ///  when
 
@@ -42,27 +47,28 @@ void main() {
     expect(drawerIconFinder, findsOneWidget);
   });
 
-  testWidgets("Given dashboard screen when user tap into menu drawer icon then show the drawer ", (tester) async {
+  testWidgets('user tap into menu drawer icon then show the drawer ', (tester) async {
     ///  given
-    final avatarFinder = find.byKey(ValueKey('avatar-key'));
+    await tester.pumpWidget(_dashboardView());
+
+    final avatarFinder = find.byKey(drawerIconKey);
     await tester.tap(avatarFinder);
     await tester.pump();
 
     ///  when
-    final drawerFinder = find.byKey(ValueKey('view-listed-crypto-item'));
+    final drawerFinder = find.byKey(drawerItemKey);
 
     ///  then
     expect(drawerFinder, findsOneWidget);
   });
 
-  testWidgets('Given dashboard screen when user tap into drawer icon and select one item then navigate to the crypto screen',
-      (tester) async {
+  testWidgets('user tap into drawer icon and select one item then navigate to the crypto screen', (tester) async {
     /// given
     /// given : renders context
     await tester.pumpWidget(_dashboardView());
 
     /// given : find avatar widget
-    final avatarFinder = find.byKey(ValueKey('avatar-key'));
+    final avatarFinder = find.byKey(drawerIconKey);
     expect(avatarFinder, findsOneWidget);
     await tester.tap(avatarFinder);
     await tester.pump();
@@ -75,7 +81,7 @@ void main() {
     await tester.pumpAndSettle();
 
     ///  when
-    final drawerFinder = find.byKey(ValueKey('view-listed-crypto-item'));
+    final drawerFinder = find.byKey(drawerItemKey);
     expect(avatarFinder, findsOneWidget);
     await tester.tap(drawerFinder, warnIfMissed: false);
     await tester.pumpAndSettle();

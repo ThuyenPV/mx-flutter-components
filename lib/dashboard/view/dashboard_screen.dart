@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 import 'package:mx_flutter_components/dashboard/cubit/dashboard_cubit.dart';
-import 'package:mx_flutter_components/l10n/l10n.dart';
 
-import 'widgets/category_widget.dart';
-import 'widgets/chart_widget.dart';
-import 'widgets/dashboard_widget.dart';
-import 'widgets/drawer_widget.dart';
-import 'widgets/search_bar.dart';
+import 'package:mx_flutter_components/dashboard/view/widgets/category_widget.dart';
+import 'package:mx_flutter_components/dashboard/view/widgets/chart_widget.dart';
+import 'package:mx_flutter_components/dashboard/view/widgets/dashboard_widget.dart';
+import 'package:mx_flutter_components/dashboard/view/widgets/drawer_widget.dart';
+import 'package:mx_flutter_components/dashboard/view/widgets/search_bar.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -43,7 +42,7 @@ class _DashboardViewState extends State<DashboardView> {
         backgroundColor: Colors.transparent,
         actions: [
           InkWell(
-            key: ValueKey('avatar-key'),
+            key: ValueKey('drawer-icon-key'),
             onTap: () {
               _scaffoldKey.currentState?.openEndDrawer();
             },
@@ -71,11 +70,11 @@ class _DashboardViewState extends State<DashboardView> {
                 ],
               ),
             ),
-            DrawerWidget(),
-            DrawerWidget(),
-            DrawerWidget(),
+            const DrawerWidget(),
+            const DrawerWidget(),
+            const DrawerWidget(),
             DrawerWidget(
-              key: ValueKey('view-listed-crypto-item'),
+              key: const ValueKey('drawer-item-key'),
               color: Colors.blue.withOpacity(0.5),
               onTap: () {
                 /// Handling close drawer menu first
@@ -92,7 +91,7 @@ class _DashboardViewState extends State<DashboardView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
-            children: [
+            children: const [
               /// Search Bar
               SearchBar(),
 

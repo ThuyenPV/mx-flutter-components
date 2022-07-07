@@ -161,7 +161,7 @@ void main() {
         });
         await tester.pumpAndSettle();
 
-        final headerKey = find.byKey(const ValueKey('avatar-key'));
+        final headerKey = find.byKey(const ValueKey('avatar-key-2'));
         expect(headerKey, findsOneWidget);
         await tester.tap(headerKey);
         expect(isPushed, true);

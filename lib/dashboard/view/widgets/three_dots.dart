@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ThreeDots extends StatelessWidget {
   const ThreeDots({
-    Key? key,
+    super.key,
     this.amountDots = 3,
-  }) : super(key: key);
+  });
 
   final int amountDots;
 

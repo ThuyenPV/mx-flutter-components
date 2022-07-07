@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
-    Key? key,
+    super.key,
     this.onTap,
     this.color,
-  }) : super(key: key);
+  });
 
   final GestureTapCallback? onTap;
   final Color? color;

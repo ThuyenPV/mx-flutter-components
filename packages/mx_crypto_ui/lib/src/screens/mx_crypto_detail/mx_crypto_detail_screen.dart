@@ -28,7 +28,7 @@ class MxCryptoDetailScreen extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: GestureDetector(
-            key: ValueKey('avatar-key'),
+            key: ValueKey('avatar-key-2'),
             onTap: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             },
