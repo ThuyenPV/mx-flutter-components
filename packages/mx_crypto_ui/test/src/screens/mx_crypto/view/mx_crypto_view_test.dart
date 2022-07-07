@@ -47,7 +47,7 @@ void main() {
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer(
+      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer(
         (invocation) async => cryptoList,
       );
     });

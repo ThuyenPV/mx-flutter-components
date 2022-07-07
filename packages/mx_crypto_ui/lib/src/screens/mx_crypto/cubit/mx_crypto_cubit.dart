@@ -17,7 +17,7 @@ class MxCryptoCubit extends Cubit<MxCryptoState> {
     if (queryParameters == null) return;
     emit(state.copyWith(status: CryptoStatus.loading));
     try {
-      final cryptoList = await cryptoRepository.fetchAllCoins(queryParameters);
+      final cryptoList = await cryptoRepository.fetchCrypto(queryParameters);
       emit(state.copyWith(status: CryptoStatus.success, cryptoList: List.from(cryptoList)));
     } on Exception {
       emit(state.copyWith(status: CryptoStatus.failure));

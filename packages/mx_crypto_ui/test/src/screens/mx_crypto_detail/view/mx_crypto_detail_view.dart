@@ -46,7 +46,7 @@ void main() {
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer(
+      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer(
         (invocation) async => cryptoList,
       );
     });
@@ -64,7 +64,7 @@ void main() {
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer(
+      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer(
         (invocation) async => cryptoList,
       );
     });
@@ -98,7 +98,7 @@ void main() {
 
       setUp(() {
         repository = MockMxCryptoRepository();
-        when(() => repository.fetchAllCoins(queryParameters)).thenAnswer(
+        when(() => repository.fetchCrypto(queryParameters)).thenAnswer(
           (invocation) async => cryptoList,
         );
       });

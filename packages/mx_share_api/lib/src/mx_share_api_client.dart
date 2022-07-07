@@ -43,10 +43,10 @@ class MxShareApiClient {
 
   final http.Client _httpClient;
 
-  /// Fetches all coin list from coingecko API.
+  /// Fetches crypto list from coingecko API.
   ///
   /// REST call: `GET /api/v3/coins/markets`
-  Future<List<Crypto>> fetchAllCoins(Map<String, dynamic>? queryParameters) async {
+  Future<List<Crypto>> fetchCrypto(Map<String, dynamic>? queryParameters) async {
     final uri = Uri.https(authority, '/api/v3/coins/markets', queryParameters);
     final response = await _get(uri);
     try {

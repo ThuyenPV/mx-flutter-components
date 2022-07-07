@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mx_crypto_repository/src/mx_crypto_repository.dart';
@@ -32,25 +31,25 @@ void main() {
 
     setUp(() {
       mxShareApiClient = MockMxShareApiClient();
-      when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+      when(() => mxShareApiClient.fetchCrypto(queryParameters)).thenAnswer((_) async => cryptoList);
       mxCryptoRepository = MxCryptoRepository(mxShareApiClient: mxShareApiClient);
     });
 
-    test('Crypto repository constructor return normally', () {
+    test('crypto repository constructor return normally', () {
       expect(() => MxCryptoRepository(), returnsNormally);
     });
 
     group('Execute fetch crypto from API', () {
       /// given
       test('throws fetchAllCrypto when API throws an exception', () async {
-        when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenThrow(HttpException());
-        expect(() => mxCryptoRepository.fetchAllCoins(queryParameters), throwsA(isA<CryptoListException>()));
-        verify(() => mxShareApiClient.fetchAllCoins(queryParameters)).called(1);
+        when(() => mxShareApiClient.fetchCrypto(queryParameters)).thenThrow(HttpException());
+        expect(() => mxCryptoRepository.fetchCrypto(queryParameters), throwsA(isA<CryptoListException>()));
+        verify(() => mxShareApiClient.fetchCrypto(queryParameters)).called(1);
       });
 
-      test('Given crypto screen when call API once time then API called', () async {
-        await mxCryptoRepository.fetchAllCoins(queryParameters);
-        verify(() => mxShareApiClient.fetchAllCoins(queryParameters)).called(1);
+      test('execute api fetchAllCoins call once time', () async {
+        await mxCryptoRepository.fetchCrypto(queryParameters);
+        verify(() => mxShareApiClient.fetchCrypto(queryParameters)).called(1);
       });
     });
   });

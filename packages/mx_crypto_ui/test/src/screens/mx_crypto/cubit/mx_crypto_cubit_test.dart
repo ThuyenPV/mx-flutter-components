@@ -33,7 +33,7 @@ void main() {
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer((invocation) async => cryptoList);
+      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer((invocation) async => cryptoList);
     });
 
     test(
@@ -64,7 +64,7 @@ void main() {
     blocTest<MxCryptoCubit, MxCryptoState>(
       'Emits failure state when repository throws exception',
       build: () {
-        when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenThrow(Exception());
+        when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenThrow(Exception());
         return MxCryptoCubit(cryptoRepository: mxCryptoRepository);
       },
       act: (cubit) => cubit.fetchCryptoList(queryParameters),

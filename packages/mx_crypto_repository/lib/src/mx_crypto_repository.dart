@@ -20,9 +20,9 @@ class MxCryptoRepository {
   /// Returns a list of all coin list from coingecko API
   ///
   /// Throws a [CryptoListException] if an error occurs.
-  Future<List<Crypto>> fetchAllCoins(Map<String, dynamic>? queryParameters) async {
+  Future<List<Crypto>> fetchCrypto(Map<String, dynamic>? queryParameters) async {
     try {
-      final cryptoList = await mxShareApiClient.fetchAllCoins(queryParameters);
+      final cryptoList = await mxShareApiClient.fetchCrypto(queryParameters);
       return cryptoList;
     } on Exception {
       throw CryptoListException();

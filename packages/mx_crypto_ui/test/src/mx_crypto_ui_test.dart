@@ -33,14 +33,14 @@ void main() {
 
   setUp(() {
     mxShareApiClient = MockMxShareApiClient();
-    when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+    when(() => mxShareApiClient.fetchCrypto(queryParameters)).thenAnswer((_) async => cryptoList);
     mxCryptoRepository = MxCryptoRepository(mxShareApiClient: mxShareApiClient);
   });
 
   group('test', () {
     setUp(() {
       mxCryptoRepository = MxCryptoRepository();
-      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer((_) async => cryptoList);
     });
 
     test('has route', () {

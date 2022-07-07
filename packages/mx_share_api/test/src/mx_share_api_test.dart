@@ -17,7 +17,7 @@ void main() {
     'sparkline': 'false',
   };
 
-  group('MxShareApi', () {
+  group('Testcases for Mx_Share_API', () {
     late http.Client httpClient;
     late MxShareApiClient subject;
 
@@ -42,7 +42,7 @@ void main() {
       expect(() => MxShareApiClient(), returnsNormally);
     });
 
-    group('.fetchAllCoins', () {
+    group('Execute scenarios when calling fetchCrypto api', () {
       setUp(() {
         when(() => httpClient.get(mxCryptoUri)).thenAnswer(
           (invocation) async => http.Response(json.encode(cryptoList), 200),
@@ -52,7 +52,7 @@ void main() {
       test('Throw HttpException when http client throws exception', () {
         when(() => httpClient.get(mxCryptoUri)).thenThrow(Exception());
         expect(
-          () => subject.fetchAllCoins(queryParameters),
+          () => subject.fetchCrypto(queryParameters),
           throwsA(isA<HttpException>()),
         );
       });
@@ -63,7 +63,7 @@ void main() {
         );
 
         expect(
-          () => subject.fetchAllCoins(queryParameters),
+          () => subject.fetchCrypto(queryParameters),
           throwsA(
             isA<HttpRequestFailure>().having((error) => error.statusCode, 'statusCode', 400),
           ),
@@ -76,7 +76,7 @@ void main() {
         );
 
         expect(
-          () => subject.fetchAllCoins(queryParameters),
+          () => subject.fetchCrypto(queryParameters),
           throwsA(isA<JsonDecodeException>()),
         );
       });
@@ -87,7 +87,7 @@ void main() {
         );
 
         expect(
-          () => subject.fetchAllCoins(queryParameters).then((response) {
+          () => subject.fetchCrypto(queryParameters).then((response) {
             return response.map((cryptoJson) {
               return Crypto.fromJson(cryptoJson as Map<String, dynamic>);
             }).toList();
@@ -97,13 +97,13 @@ void main() {
       });
 
       test('makes correct request', () async {
-        await subject.fetchAllCoins(queryParameters);
+        await subject.fetchCrypto(queryParameters);
         verify(() => httpClient.get(mxCryptoUri)).called(1);
       });
 
       test('returns correct list of crypto', () {
         expect(
-          subject.fetchAllCoins(queryParameters),
+          subject.fetchCrypto(queryParameters),
           completion(equals(cryptoList)),
         );
       });
