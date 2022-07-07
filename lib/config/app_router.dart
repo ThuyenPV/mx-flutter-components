@@ -6,7 +6,7 @@ class AppRouter {
   static Map<String, Widget Function(BuildContext)> allRouter() {
     return {
       DashboardScreen.route: (context) => DashboardScreen(),
-      MxCryptoScreen.route: (context) => MxCryptoScreen(),
+      MxCryptoScreen.route: (context) => MxCryptoScreen(key: ValueKey('MxCryptoScreen'),),
       MxCryptoDetailScreen.route: (context) => MxCryptoDetailScreen(),
     };
   }

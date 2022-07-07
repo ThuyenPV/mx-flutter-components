@@ -1,15 +1,50 @@
-// ignore_for_file: prefer_const_constructors
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mx_crypto_ui/mx_crypto_ui.dart';
+import 'package:mx_crypto_repository/mx_crypto_repository.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto/mx_crypto_screen.dart';
+import 'package:mx_share_api/mx_share_api.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:mx_crypto_repository/src/mx_crypto_repository.dart';
+
+class MockMxShareApiClient extends Mock implements MxShareApiClient {}
 
 void main() {
-  group('MxCryptoUi', () {
-    test('can be MxCryptoScreen instantiated', () {
-      expect(MxCryptoScreen(), isNotNull);
+  late MxShareApiClient mxShareApiClient;
+  late MxCryptoRepository mxCryptoRepository;
+
+  const queryParameters = <String, dynamic>{
+    'vs_currency': 'usd',
+    'order': 'market_cap_desc',
+    'per_page': '10',
+    'page': '1',
+    'sparkline': 'false',
+  };
+
+  final cryptoList = List.generate(
+    3,
+    (index) => Crypto(
+      id: '$index',
+      symbol: 'btc',
+      name: 'Bitcoin',
+      image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
+      currentPrice: 2999.0,
+    ),
+  );
+
+  setUp(() {
+    mxShareApiClient = MockMxShareApiClient();
+    when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
+    mxCryptoRepository = MxCryptoRepository(mxShareApiClient: mxShareApiClient);
+  });
+
+  group('test', () {
+    setUp(() {
+      mxCryptoRepository = MxCryptoRepository();
+      when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenAnswer((_) async => cryptoList);
     });
 
-    test('can be MxCryptoDetailScreen instantiated', () {
-      expect(MxCryptoDetailScreen(), isNotNull);
+    test('has route', () {
+      expect(MxCryptoScreen.route, isA<MaterialPageRoute<void>>());
     });
   });
 }

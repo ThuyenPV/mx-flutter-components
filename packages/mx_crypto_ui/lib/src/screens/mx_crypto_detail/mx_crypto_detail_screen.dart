@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mx_crypto_ui/src/components/crypto_chart.dart';
-import 'package:mx_crypto_ui/src/components/crypto_detail_list.dart';
-import 'package:mx_crypto_ui/src/components/header.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto_detail/view/crypto_detail_list.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto_detail/view/header.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
-/// {@template mx_crypto_detail_screen}
-/// mx_crypto_detail_screen to display all detail crypto information
+/// {@template mx_crypto_detail}
+/// mx_crypto_detail to display all detail crypto information
 /// {@endtemplate}
 class MxCryptoDetailScreen extends StatelessWidget {
-  /// {@macro mx_crypto_detail_screen}
+  /// {@macro mx_crypto_detail}
   const MxCryptoDetailScreen({super.key});
 
-  /// {@macro to navigator to mx_crypto_detail_screen screen}
+  /// {@macro to navigator to mx_crypto_detail screen}
   static const route = 'MX_CRYPTO_DETAIL_SCREEN';
 
   @override
