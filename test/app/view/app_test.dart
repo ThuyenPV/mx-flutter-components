@@ -4,7 +4,7 @@ import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
 
 void main() {
   group('App', () {
-    testWidgets('renders DashboardScreen', (tester) async {
+    testWidgets('Renders root App', (tester) async {
       await tester.pumpWidget(const App());
       expect(find.byType(DashboardScreen), findsOneWidget);
     });

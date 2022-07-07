@@ -16,7 +16,10 @@ class MxCryptoDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Crypto;
+    Crypto? args;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      args = ModalRoute.of(context)!.settings.arguments as Crypto;
+    }
 
     return Scaffold(
       appBar: PreferredSize(
@@ -25,6 +28,7 @@ class MxCryptoDetailScreen extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: GestureDetector(
+            key: ValueKey('avatar-key'),
             onTap: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             },
@@ -43,7 +47,10 @@ class MxCryptoDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
-            Header(crypto: args),
+            Header(
+              key: ValueKey('header-key'),
+              crypto: args,
+            ),
             const CryptoChart(title: 'CRYPTO DETAIL CHART'),
             const CryptoDetailList(),
           ],

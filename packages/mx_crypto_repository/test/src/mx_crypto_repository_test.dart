@@ -15,7 +15,7 @@ const Map<String, dynamic> queryParameters = {
 };
 
 void main() {
-  group('MxCoinRepository', () {
+  group('Testcases for mx crypto repository package', () {
     late MxShareApiClient mxShareApiClient;
     late MxCryptoRepository mxCryptoRepository;
 
@@ -36,18 +36,19 @@ void main() {
       mxCryptoRepository = MxCryptoRepository(mxShareApiClient: mxShareApiClient);
     });
 
-    test('Constructor return normally', () {
+    test('Crypto repository constructor return normally', () {
       expect(() => MxCryptoRepository(), returnsNormally);
     });
 
-    group('.fetchAllCrypto', () {
+    group('Execute fetch crypto from API', () {
+      /// given
       test('throws fetchAllCrypto when API throws an exception', () async {
         when(() => mxShareApiClient.fetchAllCoins(queryParameters)).thenThrow(HttpException());
         expect(() => mxCryptoRepository.fetchAllCoins(queryParameters), throwsA(isA<CryptoListException>()));
         verify(() => mxShareApiClient.fetchAllCoins(queryParameters)).called(1);
       });
 
-      test('makes correct request', () async {
+      test('Given crypto screen when call API once time then API called', () async {
         await mxCryptoRepository.fetchAllCoins(queryParameters);
         verify(() => mxShareApiClient.fetchAllCoins(queryParameters)).called(1);
       });

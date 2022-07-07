@@ -36,7 +36,6 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

@@ -12,7 +12,7 @@ class Header extends StatelessWidget {
   });
 
   /// The crypto model to display for Header UI
-  final Crypto crypto;
+  final Crypto? crypto;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,12 @@ class Header extends StatelessWidget {
       ),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(crypto.image),
+          backgroundImage: NetworkImage(crypto?.image ?? ''),
           backgroundColor: Colors.grey.withOpacity(0.25),
         ),
-        trailing: Text('${crypto.currentPrice}'),
-        title: Text(crypto.name),
-        subtitle: Text(crypto.symbol.toUpperCase()),
+        trailing: Text('${crypto?.currentPrice}'),
+        title: Text(crypto?.name ?? ''),
+        subtitle: Text(crypto?.symbol.toUpperCase() ?? ''),
       ),
     );
   }

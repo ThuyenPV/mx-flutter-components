@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef OnObservation = void Function(Route<dynamic> route, Route<dynamic> previousRoute);
 
-class AppNavigatorObserver extends NavigatorObserver {
+class TestNavigatorObserver extends NavigatorObserver {
   late OnObservation onPushed;
   late OnObservation onPopped;
   late OnObservation onRemoved;
@@ -16,7 +16,7 @@ class AppNavigatorObserver extends NavigatorObserver {
     }
   }
 
-  attachPushRouteObserver(String expectedRouteName, Function pushCallback) {
+  void attachPushRouteObserver(String expectedRouteName, Function pushCallback) {
     onPushed = (route, previousRoute) {
       final isExpectedRoutePushed = route.settings.name == expectedRouteName;
 
@@ -27,7 +27,7 @@ class AppNavigatorObserver extends NavigatorObserver {
     };
   }
 
-  attachPushRouteObserverWithArgs(String expectedRouteName, VoidCallback pushCallback(Object args)) {
+  void attachPushRouteObserverWithArgs(String expectedRouteName, VoidCallback pushCallback(Object args)) {
     onPushed = (route, previousRoute) {
       final isExpectedRoutePushed = route.settings.name == expectedRouteName;
 

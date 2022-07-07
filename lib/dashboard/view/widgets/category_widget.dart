@@ -13,7 +13,7 @@ class CategoryWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => CategoryItem(),
+        itemBuilder: (context, index) => const CategoryItem(),
         separatorBuilder: (_, __) => const SizedBox(width: 18),
       ),
     );
@@ -21,7 +21,7 @@ class CategoryWidget extends StatelessWidget {
 }
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({Key? key}) : super(key: key);
+  const CategoryItem({super.key});
 
   @override
   Widget build(BuildContext context) {

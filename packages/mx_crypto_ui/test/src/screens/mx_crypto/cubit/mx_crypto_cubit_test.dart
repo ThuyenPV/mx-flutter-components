@@ -9,7 +9,7 @@ import 'package:mx_share_api/mx_share_api.dart';
 class MockMxCryptoRepository extends Mock implements MxCryptoRepository {}
 
 void main() {
-  group("MxCryptoCubit Test Case", () {
+  group('Testcases for mx crypto cubit module', () {
     late MxCryptoRepository mxCryptoRepository;
 
     Map<String, dynamic>? queryParameters = {
@@ -37,7 +37,7 @@ void main() {
     });
 
     test(
-      'initial state is correct',
+      'Initial state is correct',
       () => {
         expect(
           MxCryptoCubit(cryptoRepository: mxCryptoRepository).state,
@@ -47,7 +47,7 @@ void main() {
     );
 
     blocTest<MxCryptoCubit, MxCryptoState>(
-      'emits successful state with list crypto value',
+      'Emits successful state with list crypto value',
       act: (cubit) => cubit.fetchCryptoList(queryParameters),
       build: () => MxCryptoCubit(
         cryptoRepository: mxCryptoRepository,
@@ -62,7 +62,7 @@ void main() {
     );
 
     blocTest<MxCryptoCubit, MxCryptoState>(
-      'emits failure state when repository throws exception',
+      'Emits failure state when repository throws exception',
       build: () {
         when(() => mxCryptoRepository.fetchAllCoins(queryParameters)).thenThrow(Exception());
         return MxCryptoCubit(cryptoRepository: mxCryptoRepository);
