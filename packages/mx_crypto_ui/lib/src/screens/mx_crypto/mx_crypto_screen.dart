@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_crypto_repository/mx_crypto_repository.dart';
-import 'package:mx_crypto_ui/src/screens/mx_crypto/view/categories.dart';
 import 'package:mx_crypto_ui/src/components/crypto_chart.dart';
-import 'package:mx_crypto_ui/src/screens/mx_crypto/view/crypto_list.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_cubit.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto/view/categories.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto/view/crypto_list.dart';
 
 /// {@template mx_crypto}
 /// mx_crypto to display all information about crypto & chart
 /// {@endtemplate}
 class MxCryptoScreen extends StatelessWidget {
   /// {@macro mx_crypto}
-  const MxCryptoScreen({Key? key}) : super(key: key);
+  const MxCryptoScreen({super.key});
 
   /// {@macro to navigator to mx_crypto}
   static const route = 'MX_CRYPTO_SCREEN';
@@ -26,7 +26,7 @@ class MxCryptoScreen extends StatelessWidget {
 }
 
 class MxCryptoView extends StatelessWidget {
-  const MxCryptoView({Key? key}) : super(key: key);
+  const MxCryptoView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,29 +5,29 @@ void main() {
   group('CryptoState', () {
     test('supports initial state comparison', () {
       expect(
-        const MxCryptoState(status: CryptoStatus.initial, cryptoList: []),
-        const MxCryptoState(status: CryptoStatus.initial, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.initial, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.initial, cryptoList: []),
       );
     });
 
     test('supports successful state comparison', () {
       expect(
-        const MxCryptoState(status: CryptoStatus.success, cryptoList: []),
-        const MxCryptoState(status: CryptoStatus.success, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.success, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.success, cryptoList: []),
       );
     });
 
     test('supports failure state comparison', () {
       expect(
-        const MxCryptoState(status: CryptoStatus.failure, cryptoList: []),
-        const MxCryptoState(status: CryptoStatus.failure, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.failure, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.failure, cryptoList: []),
       );
     });
 
     test('supports loading state comparison', () {
       expect(
-        const MxCryptoState(status: CryptoStatus.loading, cryptoList: []),
-        const MxCryptoState(status: CryptoStatus.loading, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.loading, cryptoList: []),
+        const MxCryptoState(status: FetchCryptoStatus.loading, cryptoList: []),
       );
     });
   });

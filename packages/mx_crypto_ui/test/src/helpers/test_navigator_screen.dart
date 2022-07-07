@@ -22,12 +22,6 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
     });
     return Container();
   }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 }
 
 class FakeMyApp extends StatelessWidget {

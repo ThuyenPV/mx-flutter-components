@@ -8,13 +8,11 @@ import 'package:mx_crypto_repository/mx_crypto_repository.dart';
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_cubit.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_state.dart';
-import 'package:mx_crypto_ui/src/screens/mx_crypto/mx_crypto_screen.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
 import '../../../helpers/pump_app.dart';
 import '../../../helpers/test_material_app.dart';
 import '../../../helpers/test_navigator_observer.dart';
-import '../../../helpers/test_navigator_screen.dart';
 
 class MockMxCryptoRepository extends Mock implements MxCryptoRepository {}
 
@@ -41,6 +39,12 @@ void main() {
     'page': '1',
     'sparkline': 'false',
   };
+
+  /// Key
+  const fetchFailure = ValueKey('fetch-status-is-failure-key');
+  const dataResponseIsEmpty = ValueKey('data-response-is-empty-key');
+  const fetchSuccessfully = ValueKey('fetch-status-is-success-key');
+  const fetchIsLoading = ValueKey('fetch-status-is-loading');
 
   group('Testcases for mx crypto view', () {
     late MxCryptoRepository mxCryptoRepository;
@@ -84,7 +88,7 @@ void main() {
     setUpAll(() {
       registerFallbackValue(
         const MxCryptoState(
-          status: CryptoStatus.initial,
+          status: FetchCryptoStatus.initial,
           cryptoList: const [],
         ),
       );
@@ -93,7 +97,7 @@ void main() {
     testWidgets('navigates to MxCryptoDetailScreen when crypto item is tapped', (tester) async {
       ///  given
       when(() => mxCryptoCubit.state).thenReturn(MxCryptoState(
-        status: CryptoStatus.success,
+        status: FetchCryptoStatus.success,
         cryptoList: cryptoList,
       ));
 
@@ -121,7 +125,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final cryptoSuccessFinder = find.byKey(const ValueKey('crypto-list-is-success'));
+      final cryptoSuccessFinder = find.byKey(fetchSuccessfully);
       expect(cryptoSuccessFinder, findsOneWidget);
 
       final secondCryptoName = find.text(cryptoList.first.name, skipOffstage: false);
@@ -140,7 +144,7 @@ void main() {
       'show loading when execute load data from API',
       (tester) async {
         when(() => mxCryptoCubit.state).thenReturn(const MxCryptoState(
-          status: CryptoStatus.loading,
+          status: FetchCryptoStatus.loading,
         ));
 
         await mockNetworkImages(() async {
@@ -153,19 +157,17 @@ void main() {
           );
         });
 
-        final loadingFinder = find.byKey(
-          const ValueKey('crypto-view-loading-status'),
-        );
+        final loadingFinder = find.byKey(fetchIsLoading);
         expect(loadingFinder, findsOneWidget);
       },
     );
 
     testWidgets(
-      'show error when call api is failure 2',
+      'show error when call api is failure',
       (tester) async {
         when(() => mxCryptoCubit.state).thenReturn(
           const MxCryptoState(
-            status: CryptoStatus.failure,
+            status: FetchCryptoStatus.failure,
           ),
         );
 
@@ -178,32 +180,8 @@ void main() {
             navigator: navigator,
           );
         });
-        final failureWidgetFinder = find.byKey(const ValueKey('crypto-list-is-failure'));
-        expect(failureWidgetFinder, findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'show error when call api is failure 1',
-      (tester) async {
-        when(() => mxCryptoCubit.state).thenReturn(
-          const MxCryptoState(
-            status: CryptoStatus.failure,
-          ),
-        );
-
-        await mockNetworkImages(() async {
-          await tester.pumpApp(
-            BlocProvider.value(
-              value: mxCryptoCubit,
-              child: const MxCryptoView(),
-            ),
-            navigator: navigator,
-          );
-        });
-        await tester.pumpAndSettle();
-        await navigator.pushNamed('MX_CRYPTO_DETAIL_SCREEN', arguments: cryptoList.first);
-        await tester.pumpAndSettle();
+        final failureViewFinder = find.byKey(fetchFailure);
+        expect(failureViewFinder, findsOneWidget);
       },
     );
 
@@ -212,7 +190,7 @@ void main() {
       (tester) async {
         when(() => mxCryptoCubit.state).thenReturn(
           const MxCryptoState(
-            status: CryptoStatus.success,
+            status: FetchCryptoStatus.success,
             cryptoList: [],
           ),
         );
@@ -227,10 +205,8 @@ void main() {
           );
         });
 
-        final failureWidgetFinder = find.byKey(
-          const ValueKey('crypto-list-is-isEmpty'),
-        );
-        expect(failureWidgetFinder, findsOneWidget);
+        final emptyViewFinder = find.byKey(dataResponseIsEmpty);
+        expect(emptyViewFinder, findsOneWidget);
       },
     );
   });

@@ -4,7 +4,8 @@ import 'package:mx_crypto_repository/mx_crypto_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_cubit.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_state.dart';
-import 'package:mx_share_api/mx_share_api.dart';
+
+import '../../../helpers/test_app_constant.dart';
 
 class MockMxCryptoRepository extends Mock implements MxCryptoRepository {}
 
@@ -12,28 +13,12 @@ void main() {
   group('Testcases for mx crypto cubit module', () {
     late MxCryptoRepository mxCryptoRepository;
 
-    Map<String, dynamic>? queryParameters = {
-      'vs_currency': 'usd',
-      'order': 'market_cap_desc',
-      'per_page': '10',
-      'page': '1',
-      'sparkline': 'false',
-    };
-
-    final cryptoList = List.generate(
-      3,
-      (index) => Crypto(
-        id: '$index',
-        name: 'mock-crypto-name-$index',
-        symbol: 'mock-crypto-symbol-$index',
-        image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-        currentPrice: 1999.0,
-      ),
-    );
+    final queryParam = TestAppConstant.queryParameters;
+    final cryptoList = TestAppConstant.listCrypto;
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer((invocation) async => cryptoList);
+      when(() => mxCryptoRepository.fetchCrypto(queryParam)).thenAnswer((invocation) async => cryptoList);
     });
 
     test(
@@ -48,14 +33,14 @@ void main() {
 
     blocTest<MxCryptoCubit, MxCryptoState>(
       'Emits successful state with list crypto value',
-      act: (cubit) => cubit.fetchCryptoList(queryParameters),
+      act: (cubit) => cubit.fetchCrypto(queryParam),
       build: () => MxCryptoCubit(
         cryptoRepository: mxCryptoRepository,
       ),
       expect: () => [
-        const MxCryptoState(status: CryptoStatus.loading),
+        const MxCryptoState(status: FetchCryptoStatus.loading),
         MxCryptoState(
-          status: CryptoStatus.success,
+          status: FetchCryptoStatus.success,
           cryptoList: cryptoList,
         ),
       ],
@@ -64,13 +49,13 @@ void main() {
     blocTest<MxCryptoCubit, MxCryptoState>(
       'Emits failure state when repository throws exception',
       build: () {
-        when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenThrow(Exception());
+        when(() => mxCryptoRepository.fetchCrypto(queryParam)).thenThrow(Exception());
         return MxCryptoCubit(cryptoRepository: mxCryptoRepository);
       },
-      act: (cubit) => cubit.fetchCryptoList(queryParameters),
+      act: (cubit) => cubit.fetchCrypto(queryParam),
       expect: () => [
-        const MxCryptoState(status: CryptoStatus.loading),
-        const MxCryptoState(status: CryptoStatus.failure),
+        const MxCryptoState(status: FetchCryptoStatus.loading),
+        const MxCryptoState(status: FetchCryptoStatus.failure),
       ],
     );
   });

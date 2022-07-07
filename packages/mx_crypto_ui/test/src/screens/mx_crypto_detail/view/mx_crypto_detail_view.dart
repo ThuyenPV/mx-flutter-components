@@ -11,6 +11,7 @@ import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_state.dart';
 import 'package:mx_share_api/mx_share_api.dart';
 
 import '../../../helpers/pump_app.dart';
+import '../../../helpers/test_app_constant.dart';
 import '../../../helpers/test_material_app.dart';
 import '../../../helpers/test_navigator_observer.dart';
 import '../../../helpers/test_navigator_screen.dart';
@@ -22,31 +23,15 @@ class MockMxCryptoCubit extends MockCubit<MxCryptoState> implements MxCryptoCubi
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-  final cryptoList = List.generate(
-    3,
-    (index) => Crypto(
-      id: '$index',
-      name: 'mock-crypto-name-$index',
-      symbol: 'mock-crypto-symbol-$index',
-      image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-      currentPrice: 1999.0,
-    ),
-  );
-
-  Map<String, dynamic>? queryParameters = {
-    'vs_currency': 'usd',
-    'order': 'market_cap_desc',
-    'per_page': '10',
-    'page': '1',
-    'sparkline': 'false',
-  };
+  final queryParam = TestAppConstant.queryParameters;
+  final cryptoList = TestAppConstant.listCrypto;
 
   group('CryptoView Testcases', () {
     late MxCryptoRepository mxCryptoRepository;
 
     setUp(() {
       mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer(
+      when(() => mxCryptoRepository.fetchCrypto(queryParam)).thenAnswer(
         (invocation) async => cryptoList,
       );
     });
@@ -59,113 +44,56 @@ void main() {
     );
   });
 
-  group('Testcases for mx crypto view', () {
-    late MxCryptoRepository mxCryptoRepository;
-
-    setUp(() {
-      mxCryptoRepository = MockMxCryptoRepository();
-      when(() => mxCryptoRepository.fetchCrypto(queryParameters)).thenAnswer(
-        (invocation) async => cryptoList,
-      );
-    });
-  });
-
-  group('CryptoView', () {
+  group('Testcases related to crypto detail screen', () {
     late MxCryptoCubit mxCryptoCubit;
     late MockNavigator navigator;
     late TestNavigatorObserver _navObserver;
+    late MxCryptoRepository repository;
 
     setUp(() {
       _navObserver = TestNavigatorObserver();
       mxCryptoCubit = MockMxCryptoCubit();
       navigator = MockNavigator();
-      when(() => navigator.push(any(that: isRoute<void>()))).thenAnswer(
-        (invocation) async {},
+      when(() => navigator.push(any(that: isRoute<void>()))).thenAnswer((invocation) async {});
+
+      ///
+      repository = MockMxCryptoRepository();
+      when(() => repository.fetchCrypto(queryParam)).thenAnswer(
+        (invocation) async => cryptoList,
       );
     });
 
     setUpAll(() {
       registerFallbackValue(
-        const MxCryptoState(
-          status: CryptoStatus.initial,
-          cryptoList: [],
-        ),
+        const MxCryptoState(status: FetchCryptoStatus.initial, cryptoList: []),
       );
     });
 
-    group('Test.... ', () {
-      late MxCryptoRepository repository;
-
-      setUp(() {
-        repository = MockMxCryptoRepository();
-        when(() => repository.fetchCrypto(queryParameters)).thenAnswer(
-          (invocation) async => cryptoList,
-        );
+    testWidgets('transfer data from crypto screen to crypto detail screen', (tester) async {
+      var isPushed = false;
+      _navObserver.attachPushRouteObserverWithArgs('MX_CRYPTO_DETAIL_SCREEN', (args) {
+        isPushed = true;
+        return () {};
       });
+      await tester.pumpAndSettle();
 
-      testWidgets('navigation test', (WidgetTester tester) async {
-        var isPushed = false;
-        _navObserver.attachPushRouteObserverWithArgs('MX_CRYPTO_DETAIL_SCREEN', (args) {
-          isPushed = true;
-          return () {};
-        });
-        await tester.pumpAndSettle();
-
-        await mockNetworkImages(() async {
-          await tester.pumpApp(
-            BlocProvider.value(
-              value: mxCryptoCubit,
-              child: TestMaterialApp(
-                home: NavigatorScreen(
-                  arguments: cryptoList.first,
-                  targetRouteName: 'MX_CRYPTO_DETAIL_SCREEN',
-                ),
-                navigatorObserver: _navObserver,
+      await mockNetworkImages(() async {
+        await tester.pumpApp(
+          BlocProvider.value(
+            value: mxCryptoCubit,
+            child: TestMaterialApp(
+              home: NavigatorScreen(
+                arguments: cryptoList.first,
+                targetRouteName: 'MX_CRYPTO_DETAIL_SCREEN',
               ),
-            ),
-            navigator: navigator,
-          );
-        });
-        await tester.pumpAndSettle();
-
-        expect(isPushed, true);
-
-        await mockNetworkImages(() async {
-          await tester.pumpApp(
-            BlocProvider.value(
-              value: mxCryptoCubit,
-              child: TestMaterialApp(
-                home: const MxCryptoDetailScreen(),
-                navigatorObserver: _navObserver,
-              ),
-            ),
-            navigator: navigator,
-          );
-        });
-        await tester.pumpAndSettle();
-
-        var isPushed2 = false;
-        _navObserver.attachPushRouteObserverWithArgs('MX_CRYPTO_DETAIL_SCREEN', (args) {
-          isPushed2 = true;
-          return () {};
-        });
-        await tester.pumpAndSettle();
-
-        await mockNetworkImages(() async {
-          await tester.pumpWidget(
-            TestMaterialApp(
-              home: const MxCryptoDetailScreen(),
               navigatorObserver: _navObserver,
             ),
-          );
-        });
-        await tester.pumpAndSettle();
-
-        final headerKey = find.byKey(const ValueKey('avatar-key-2'));
-        expect(headerKey, findsOneWidget);
-        await tester.tap(headerKey);
-        expect(isPushed, true);
+          ),
+          navigator: navigator,
+        );
       });
+      await tester.pumpAndSettle();
+      expect(isPushed, true);
     });
   });
 }

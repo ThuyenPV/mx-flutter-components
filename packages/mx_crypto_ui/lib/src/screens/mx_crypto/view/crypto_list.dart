@@ -26,7 +26,7 @@ class _CryptoListState extends State<CryptoList> {
   };
 
   Future<void> fetchCryptoList() async {
-    return context.read<MxCryptoCubit>().fetchCryptoList(queryParameters);
+    return context.read<MxCryptoCubit>().fetchCrypto(queryParameters);
   }
 
   @override
@@ -40,25 +40,25 @@ class _CryptoListState extends State<CryptoList> {
     return BlocBuilder<MxCryptoCubit, MxCryptoState>(
       builder: (context, state) {
         switch (state.status) {
-          case CryptoStatus.initial:
+          case FetchCryptoStatus.initial:
             return StatusView(
               key: ValueKey('crypto-view-initial-status'),
-              CryptoStatus.initial,
+              FetchCryptoStatus.initial,
             );
-          case CryptoStatus.loading:
-            return LoadingWidget(
-              key: ValueKey('crypto-view-loading-status'),
+          case FetchCryptoStatus.loading:
+            return const LoadingWidget(
+              key: ValueKey('fetch-status-is-loading'),
             );
-          case CryptoStatus.success:
+          case FetchCryptoStatus.success:
             final cryptoList = state.cryptoList ?? [];
             if (cryptoList.isEmpty) {
               return const StatusView(
-                CryptoStatus.failure,
-                key: ValueKey('crypto-list-is-isEmpty'),
+                FetchCryptoStatus.failure,
+                key: ValueKey('data-response-is-empty-key'),
               );
             }
             return Expanded(
-              key: const ValueKey('crypto-list-is-success'),
+              key: const ValueKey('fetch-status-is-success-key'),
               child: ListView.separated(
                 key: const ValueKey('ListView.separated'),
                 itemCount: cryptoList.length,
@@ -76,11 +76,11 @@ class _CryptoListState extends State<CryptoList> {
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
               ),
             );
-          case CryptoStatus.failure:
+          case FetchCryptoStatus.failure:
           default:
             return const StatusView(
-              CryptoStatus.failure,
-              key: ValueKey('crypto-list-is-failure'),
+              FetchCryptoStatus.failure,
+              key: ValueKey('fetch-status-is-failure-key'),
             );
         }
       },
@@ -152,13 +152,17 @@ class LoadingWidget extends StatelessWidget {
   }
 }
 
+/// {@template status_view}
+/// A Dart class that exposes when status returns data isEmpty, isFailure, isInitial
+/// {@contemplate}
 class StatusView extends StatelessWidget {
+  /// {@macro status_view}
   const StatusView(
     this.status, {
     super.key,
   });
 
-  final CryptoStatus status;
+  final FetchCryptoStatus status;
 
   @override
   Widget build(BuildContext context) {
