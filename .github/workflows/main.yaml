@@ -1,37 +1,75 @@
-name: mx_flutter_components
+name: Mx Flutter Components Workflow
 
 on:
-  pull_request:
-    paths:
-      - "lib/**"
-      - "test/**"
-      - "packages/**"
-      - ".github/workflows/main.yaml"
-      - "pubspec.yaml"
+  workflow_call:
+    inputs:
+      concurrency:
+        required: false
+        type: number
+        default: 4
+      coverage_excludes:
+        required: false
+        type: string
+        default: ""
+      flutter_channel:
+        required: false
+        type: string
+        default: "stable"
+      flutter_version:
+        required: false
+        type: string
+        default: ""
+      working_directory:
+        required: false
+        type: string
+        default: "."
+      min_coverage:
+        required: false
+        type: number
+        default: 100
+      test_optimization:
+        required: false
+        type: boolean
+        default: true
+      test_recursion:
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ${{inputs.working_directory}}
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v2
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2.4.0
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: ${{inputs.flutter_version}}
+          channel: ${{inputs.flutter_channel}}
+          cache: true
 
-      - name: "[TEMPORARY] Upgrade Flutter"
-        run: flutter upgrade
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good --analytics false
+          very_good packages get --recursive
 
-      - name: Install Dependencies
-        run: flutter packages get
-
-      - name: Format
-        run: flutter format --set-exit-if-changed lib test
-
-      - name: Analyze
+      - name: 🕵️ Analyze
         run: flutter analyze lib test
 
-      - name: Run tests
-        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+      - name: 🧪 Run Tests
+        run: very_good test -j ${{inputs.concurrency}} ${{(inputs.test_recursion && '--recursive') || ''}} ${{(inputs.test_optimization && '--optimization') || '--no-optimization'}} --coverage --test-randomize-ordering-seed random
+
+      - name: 📊 Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1
+        with:
+          path: ${{inputs.working_directory}}/coverage/lcov.info
+          exclude: ${{inputs.coverage_excludes}}
+          min_coverage: ${{inputs.min_coverage}}
