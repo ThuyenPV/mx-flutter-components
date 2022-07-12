@@ -7,7 +7,7 @@ class CryptoListException implements Exception {}
 class SearchException implements Exception {}
 
 /// {@template mx_coin_repository}
-/// A Dart class that exposes methods to call mx_share_api layer
+/// A Dart class that exposes methods to call mx_share_api.yml layer
 /// {@contemplate}
 class MxCryptoRepository {
   /// {@macro mx_coin_repository}

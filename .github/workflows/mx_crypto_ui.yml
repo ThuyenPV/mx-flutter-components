@@ -1,0 +1,34 @@
+name: mx_crypto_ui
+
+on:
+  pull_request:
+    paths:
+      - "packages/mx_crypto_ui/**"
+      - ".github/workflows/mx_crypto_ui.yaml"
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: packages/mx_crypto_ui
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📚 Git Checkout
+      - uses: actions/checkout@v2
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{inputs.flutter_version}}
+          channel: ${{inputs.flutter_channel}}
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good --analytics false
+          very_good packages get --recursive
+          very_good test
+          very_good test --coverage

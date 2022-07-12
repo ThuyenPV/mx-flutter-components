@@ -1,0 +1,46 @@
+name: mx_share_api
+
+on:
+  pull_request:
+    paths:
+      - "packages/mx_share_api/**"
+      - ".github/workflows/mx_share_api.yaml"
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: packages/mx_share_api
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📚 Git Checkout
+      - uses: actions/checkout@v2
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{inputs.flutter_version}}
+          channel: ${{inputs.flutter_channel}}
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          very_good --analytics false
+          very_good packages get --recursive
+          very_good test
+          very_good test --coverage
+
+      - name: Run all tests
+        run: very_good test
+
+      - name: Run all tests and collect coverage
+        run: very_good test --coverage
+
+      # - name: Check Code Coverage
+      #   uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+      #   with:
+      #     path: packages/mx_share_api/coverage/lcov.info
+      #     exclude: "**/*.g.dart **/*.gen.dart"
