@@ -76,11 +76,14 @@ class _CryptoListState extends State<CryptoList> {
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
               ),
             );
+
+          /// Unhappy case : show error message & return to Dashboard page
           case FetchCryptoStatus.failure:
-          default:
-            return const StatusView(
-              FetchCryptoStatus.failure,
-              key: ValueKey('fetch-status-is-failure-key'),
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            });
+            return const SizedBox.shrink(
+              key: ValueKey('fetch-status-is-failure'),
             );
         }
       },

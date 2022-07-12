@@ -29,7 +29,7 @@ class TestNavigatorObserver extends NavigatorObserver {
 
   void attachPushRouteObserverWithArgs(
     String expectedRouteName,
-    VoidCallback pushCallback(Object args),
+    VoidCallback Function(Object args) pushCallback,
   ) {
     onPushed = (route, previousRoute) {
       final isExpectedRoutePushed = route.settings.name == expectedRouteName;

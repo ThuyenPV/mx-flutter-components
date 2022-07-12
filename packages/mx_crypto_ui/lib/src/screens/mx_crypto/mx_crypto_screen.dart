@@ -25,6 +25,9 @@ class MxCryptoScreen extends StatelessWidget {
   }
 }
 
+/// {@template mx_crypto_view}
+/// mx_crypto_view to display crypto view components
+/// {@endtemplate}
 class MxCryptoView extends StatelessWidget {
   const MxCryptoView({super.key});
 
@@ -52,9 +55,7 @@ class MxCryptoView extends StatelessWidget {
           children: const [
             Categories(),
             CryptoChart(title: 'CRYPTO CHART'),
-            CryptoList(
-              key: ValueKey('crypto-screen-list'),
-            ),
+            CryptoList(),
           ],
         ),
       ),

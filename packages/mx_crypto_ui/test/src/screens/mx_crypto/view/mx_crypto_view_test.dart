@@ -45,6 +45,7 @@ void main() {
   const dataResponseIsEmpty = ValueKey('data-response-is-empty-key');
   const fetchSuccessfully = ValueKey('fetch-status-is-success-key');
   const fetchIsLoading = ValueKey('fetch-status-is-loading');
+  const fetchStatusIsFailure = ValueKey('fetch-status-is-failure');
 
   group('Testcases for mx crypto view', () {
     late MxCryptoRepository mxCryptoRepository;
@@ -180,8 +181,13 @@ void main() {
             navigator: navigator,
           );
         });
-        final failureViewFinder = find.byKey(fetchFailure);
-        expect(failureViewFinder, findsOneWidget);
+
+        await tester.pumpAndSettle();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final statusFailureKey = find.byKey(fetchStatusIsFailure);
+          expect(statusFailureKey, findsNothing);
+        });
       },
     );
 
