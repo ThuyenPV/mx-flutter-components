@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   mx_crypto_ui:
-    path: packages/mx_crypto_ui
+    path: mx_crypto_ui
 
 dev_dependencies:
   bloc_test: ^9.0.3
