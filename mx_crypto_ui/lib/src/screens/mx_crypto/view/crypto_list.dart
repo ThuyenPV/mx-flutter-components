@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_cubit.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_state.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto_detail/mx_crypto_detail_screen.dart';
 import 'package:mx_share_api/mx_share_api.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// {@template crypto_list}
 /// A Dart class that exposes implement Crypto List UI
@@ -17,7 +19,12 @@ class CryptoList extends StatefulWidget {
 }
 
 class _CryptoListState extends State<CryptoList> {
-  Map<String, dynamic>? queryParameters = {
+  int currentPage = 0;
+  final totalPages = 1300;
+  List<Crypto> cryptoList = [];
+  final _mxRefreshController = RefreshController(initialRefresh: false);
+
+  Map<String, dynamic> initParameters = {
     'vs_currency': 'usd',
     'order': 'market_cap_desc',
     'per_page': '10',
@@ -25,14 +32,57 @@ class _CryptoListState extends State<CryptoList> {
     'sparkline': 'false',
   };
 
-  Future<void> fetchCryptoList() async {
-    return context.read<MxCryptoCubit>().fetchCrypto(queryParameters);
-  }
-
   @override
   void initState() {
     fetchCryptoList();
     super.initState();
+  }
+
+  Future<void> fetchCryptoList({Map<String, dynamic>? queryParameters, bool? hasLoading}) async {
+    final queryParams = queryParameters ?? initParameters;
+    return context.read<MxCryptoCubit>().fetchCrypto(queryParams, hasLoading: hasLoading);
+  }
+
+  void _onRefresh() async {
+    fetchCryptoList(hasLoading: false).then((_) {
+      _mxRefreshController.refreshCompleted();
+    });
+  }
+
+  void _onLoading() async {
+    /// set up parameters
+    if (currentPage < totalPages) currentPage++;
+    initParameters['page'] = currentPage.toString();
+
+    /// handling load more
+    fetchCryptoList(hasLoading: false, queryParameters: initParameters).then((_) {
+      if (mounted) setState(() {});
+      _mxRefreshController.loadComplete();
+    });
+  }
+
+  Widget _buildLoadStatus(LoadStatus? mode) {
+    switch (mode) {
+      case LoadStatus.idle:
+        return const Text("Pull up to load");
+      case LoadStatus.loading:
+        return const CircularProgressIndicator();
+      case LoadStatus.failed:
+        return const Text("Load failed!Click retry!");
+      case LoadStatus.canLoading:
+        return const Text("Release to load more");
+      default:
+        return const Text("No more data");
+    }
+  }
+
+  Widget _buildCustomFooter() {
+    return CustomFooter(
+      builder: (BuildContext context, LoadStatus? mode) => SizedBox(
+        height: 55.0,
+        child: Center(child: _buildLoadStatus(mode)),
+      ),
+    );
   }
 
   @override
@@ -50,7 +100,7 @@ class _CryptoListState extends State<CryptoList> {
               key: ValueKey('fetch-status-is-loading'),
             );
           case FetchCryptoStatus.success:
-            final cryptoList = state.cryptoList ?? [];
+            cryptoList.addAll(state.cryptoList ?? []);
             if (cryptoList.isEmpty) {
               return const StatusView(
                 FetchCryptoStatus.failure,
@@ -59,21 +109,30 @@ class _CryptoListState extends State<CryptoList> {
             }
             return Expanded(
               key: const ValueKey('fetch-status-is-success-key'),
-              child: ListView.separated(
-                key: const ValueKey('ListView.separated'),
-                itemCount: cryptoList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => CryptoItem(
-                  crypto: cryptoList[index],
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      MxCryptoDetailScreen.route,
-                      arguments: cryptoList[index],
-                    );
-                  },
+              child: SmartRefresher(
+                controller: _mxRefreshController,
+                enablePullDown: true,
+                enablePullUp: true,
+                onLoading: _onLoading,
+                onRefresh: _onRefresh,
+                header: const WaterDropHeader(),
+                footer: _buildCustomFooter(),
+                child: ListView.separated(
+                  key: const ValueKey('ListView.separated'),
+                  itemCount: cryptoList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => CryptoItem(
+                    crypto: cryptoList[index],
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MxCryptoDetailScreen.route,
+                        arguments: cryptoList[index],
+                      );
+                    },
+                  ),
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
                 ),
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
               ),
             );
 

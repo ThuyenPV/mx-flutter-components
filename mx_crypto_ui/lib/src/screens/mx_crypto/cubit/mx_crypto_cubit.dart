@@ -20,9 +20,11 @@ class MxCryptoCubit extends Cubit<MxCryptoState> {
 
   /// {@macro method used to call crypto from api with queryParameters}
   /// Reference queryParameters at : https://www.coingecko.com/en/api/documentation
-  void fetchCrypto(Map<String, dynamic>? queryParameters) async {
+  void fetchCrypto(Map<String, dynamic>? queryParameters, {bool? hasLoading}) async {
     if (queryParameters == null) return;
-    emit(state.copyWith(status: FetchCryptoStatus.loading));
+    if (hasLoading ?? true) {
+      emit(state.copyWith(status: FetchCryptoStatus.loading));
+    }
     try {
       final cryptoList = await cryptoRepository.fetchCrypto(queryParameters);
       emit(state.copyWith(status: FetchCryptoStatus.success, cryptoList: List.from(cryptoList)));

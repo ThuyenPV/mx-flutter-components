@@ -55,7 +55,9 @@ class MxCryptoView extends StatelessWidget {
           children: const [
             Categories(),
             CryptoChart(title: 'CRYPTO CHART'),
-            CryptoList(),
+            CryptoList(
+              key: ValueKey('crypto-list-key'),
+            ),
           ],
         ),
       ),

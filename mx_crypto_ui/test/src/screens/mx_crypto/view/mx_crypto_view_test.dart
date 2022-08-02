@@ -8,7 +8,9 @@ import 'package:mx_crypto_repository/mx_crypto_repository.dart';
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_cubit.dart';
 import 'package:mx_crypto_ui/src/screens/mx_crypto/cubit/mx_crypto_state.dart';
+import 'package:mx_crypto_ui/src/screens/mx_crypto/view/crypto_list.dart';
 import 'package:mx_share_api/mx_share_api.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../helpers/pump_app.dart';
 import '../../../helpers/test_material_app.dart';
@@ -46,6 +48,30 @@ void main() {
   const fetchSuccessfully = ValueKey('fetch-status-is-success-key');
   const fetchIsLoading = ValueKey('fetch-status-is-loading');
   const fetchStatusIsFailure = ValueKey('fetch-status-is-failure');
+  const cryptoListKey = ValueKey('crypto-list-key');
+
+  Widget _buildCryptoList(RefreshController controller) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: SmartRefresher(
+        controller: controller,
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropHeader(),
+        child: ListView.separated(
+          key: const ValueKey('crypto-list-key'),
+          itemCount: cryptoList.length,
+          shrinkWrap: true,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (context, index) => CryptoItem(
+            key: UniqueKey(),
+            crypto: cryptoList[index],
+            onTap: () {},
+          ),
+        ),
+      ),
+    );
+  }
 
   group('Testcases for mx crypto view', () {
     late MxCryptoRepository mxCryptoRepository;
@@ -213,6 +239,86 @@ void main() {
 
         final emptyViewFinder = find.byKey(dataResponseIsEmpty);
         expect(emptyViewFinder, findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'perform load more then load status is idle',
+      (tester) async {
+        ///  given
+        when(() => mxCryptoCubit.state).thenReturn(MxCryptoState(
+          status: FetchCryptoStatus.success,
+          cryptoList: cryptoList,
+        ));
+
+        await mockNetworkImages(() async {
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: mxCryptoCubit,
+              child: TestMaterialApp(
+                home: const MxCryptoView(),
+                navigatorObserver: _navObserver,
+              ),
+            ),
+            navigator: navigator,
+          );
+        });
+
+        await tester.pumpAndSettle();
+        final _refreshController = RefreshController(initialRefresh: true);
+
+        await mockNetworkImages(() async {
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: mxCryptoCubit,
+              child: _buildCryptoList(_refreshController),
+            ),
+            navigator: navigator,
+          );
+        });
+
+        await tester.pumpAndSettle(const Duration(milliseconds: 500));
+        expect(_refreshController.footerStatus, LoadStatus.idle);
+      },
+    );
+
+    testWidgets(
+      'perform pull to refresh then show refresh status is idle',
+      (tester) async {
+        ///  given
+        when(() => mxCryptoCubit.state).thenReturn(MxCryptoState(
+          status: FetchCryptoStatus.success,
+          cryptoList: cryptoList,
+        ));
+
+        await mockNetworkImages(() async {
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: mxCryptoCubit,
+              child: TestMaterialApp(
+                home: const MxCryptoView(),
+                navigatorObserver: _navObserver,
+              ),
+            ),
+            navigator: navigator,
+          );
+        });
+
+        await tester.pumpAndSettle();
+        final _refreshController = RefreshController(initialRefresh: true);
+
+        await mockNetworkImages(() async {
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: mxCryptoCubit,
+              child: _buildCryptoList(_refreshController),
+            ),
+            navigator: navigator,
+          );
+        });
+
+        await tester.pumpAndSettle();
+        expect(_refreshController.headerStatus, RefreshStatus.idle);
       },
     );
   });

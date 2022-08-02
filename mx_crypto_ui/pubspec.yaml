@@ -32,9 +32,9 @@ dependencies:
   equatable: ^2.0.3
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
+  pull_to_refresh: ^2.0.0
   mx_crypto_repository:
     path: ../mx_crypto_repository
-
   mx_share_api:
     path: ../mx_share_api
 
