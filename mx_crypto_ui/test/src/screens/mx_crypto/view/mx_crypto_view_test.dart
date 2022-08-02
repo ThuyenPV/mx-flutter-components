@@ -24,7 +24,7 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   final cryptoList = List.generate(
-    3,
+    50,
     (index) => Crypto(
       id: '$index',
       name: 'mock-crypto-name-$index',
@@ -319,6 +319,34 @@ void main() {
 
         await tester.pumpAndSettle();
         expect(_refreshController.headerStatus, RefreshStatus.idle);
+      },
+    );
+
+    testWidgets(
+      'perform load more then show load status is loading',
+      (tester) async {
+        ///  given
+        when(() => mxCryptoCubit.state).thenReturn(MxCryptoState(
+          status: FetchCryptoStatus.loading,
+          cryptoList: cryptoList,
+        ));
+
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+        final _refreshController = RefreshController(initialRefresh: true);
+
+        await mockNetworkImages(() async {
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: mxCryptoCubit,
+              child: _buildCryptoList(_refreshController),
+            ),
+            navigator: navigator,
+          );
+        });
+
+        _refreshController.position!.jumpTo(_refreshController.position!.maxScrollExtent - 600);
+        await tester.fling(find.byType(Scrollable), const Offset(0, -600.0), 2200);
+        await tester.pump();
       },
     );
   });
