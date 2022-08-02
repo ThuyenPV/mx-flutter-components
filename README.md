@@ -49,6 +49,12 @@ $ open coverage/index.html
 ## 🔥 Package Diagram
 <img src="https://github.com/ThuyenPV/mx-flutter-components/blob/main/screenshots/system.png" alt="mx package diagram" width="100%" height="auto"/>
 
----
+
+## 🔥 Demo Video
+|                                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![fullscreen](screenshots/demo_video.gif)
+|                                                                                                                                                          |
+
 
 We're genuinely happy when received the feedback from all ❤️
