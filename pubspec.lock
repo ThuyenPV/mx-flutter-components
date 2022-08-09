@@ -320,7 +320,7 @@ packages:
   mx_crypto_repository:
     dependency: transitive
     description:
-      path: mx_crypto_repository
+      path: "mx_crypto_ui/mx_crypto_repository"
       relative: true
     source: path
     version: "1.0.0+1"
@@ -334,7 +334,7 @@ packages:
   mx_share_api:
     dependency: transitive
     description:
-      path: mx_share_api
+      path: "mx_crypto_ui/mx_share_api"
       relative: true
     source: path
     version: "1.0.0+1"

@@ -273,14 +273,14 @@ packages:
   mx_crypto_repository:
     dependency: "direct main"
     description:
-      path: "../mx_crypto_repository"
+      path: mx_crypto_repository
       relative: true
     source: path
     version: "1.0.0+1"
   mx_share_api:
     dependency: "direct main"
     description:
-      path: "../mx_share_api"
+      path: mx_share_api
       relative: true
     source: path
     version: "1.0.0+1"
