@@ -1,4 +1,4 @@
-# mx_crypto_component
+# Mx Crypto Component
 
 MX Crypto Component is a component used to view crypto indices and prices.\
 It is also part of the Certification Proof of Concept Plugin
@@ -20,9 +20,9 @@ In your library add the following import:
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 ```
 
-## Example
+## 🚀[Example](https://github.com/ThuyenPV/mx-flutter-components/tree/main/mx_crypto_ui/example)
 
-``` dart
+```dart
 import 'package:flutter/material.dart';
 import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
@@ -53,10 +53,11 @@ Navigator.pushNamed(context, MxCryptoScreen.route);
 
 ```
 
-## Preview
-|                                                                                                                                                          |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![fullscreen](screenshots/demo_video.gif)
-|                                                                                                                                                          |
+## 🔥[Preview](https://github.com/ThuyenPV/mx-flutter-components/tree/main/screenshots)
+
+|                                                |                                            |
+| ---------------------------------------------- | ------------------------------------------ |
+| ![fullscreen](screenshots/preview_android.gif) | ![fullscreen](screenshots/preview_ios.gif) |
+|                                                |                                            |
 
 We're genuinely happy when received feedback from all ❤️
