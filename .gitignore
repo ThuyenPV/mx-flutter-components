@@ -20,7 +20,7 @@
 .classpath
 .project
 .settings/
-.vscode/*
+mx_crypto_ui/example/.vscode/*
 
 # Flutter repo-specific
 /bin/cache/
@@ -120,8 +120,8 @@ app.*.map.json
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
-!.vscode/extensions.json
-!.vscode/launch.json
+!mx_crypto_ui/example/.vscode/extensions.json
+!mx_crypto_ui/example/.vscode/launch.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/

@@ -1,60 +1,62 @@
-# Mx Flutter Components
+# mx_crypto_component
 
----
+MX Crypto Component is a component used to view crypto indices and prices.\
+It is also part of the Certification Proof of Concept Plugin
 
-## Getting Started 🚀
+## Usage
 
-This project contains 3 flavors:
+In the `pubspec.yaml` of your flutter project, add the following dependency:
 
-- development
-- staging
-- production
-
-To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
-
-```sh
-# Development
-$ flutter run --flavor development --target lib/main_development.dart
-
-# Staging
-$ flutter run --flavor staging --target lib/main_staging.dart
-
-# Production
-$ flutter run --flavor production --target lib/main_production.dart
+```yaml
+dependencies:
+  ...
+  mx_crypto_ui:
+     path: mx_crypto_ui
 ```
 
-_\*Mx Flutter Components works on iOS, Android.
+In your library add the following import:
 
----
-
-## Running Tests 🧪
-
-To run all unit and widget tests use the following command:
-
-```sh
-$ flutter test --coverage --test-randomize-ordering-seed random
+```dart
+import 'package:mx_crypto_ui/mx_crypto_ui.dart';
 ```
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+## Example
 
-```sh
-# Generate Coverage Report
-$ genhtml coverage/lcov.info -o coverage/
+``` dart
+import 'package:flutter/material.dart';
+import 'package:mx_crypto_ui/mx_crypto_ui.dart';
+import 'package:mx_flutter_components/dashboard/view/dashboard_screen.dart';
 
-# Open Coverage Report
-$ open coverage/index.html
+/// 1: Configure route name
+MaterialApp(
+      routes: {
+          "DASHBOARD_SCREEN": (context) => const DashboardScreen(),
+          "DASHBOARD_SCREEN": (context) => const MxCryptoScreen(),
+          "MX_CRYPTO_DETAIL_SCREEN": (context) => const MxCryptoDetailScreen(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case DashboardScreen.route:
+            return const MxCryptoScreen();
+          case MxCryptoScreen.route:
+            return const MxCryptoDetailScreen();
+          case MxCryptoDetailScreen.route:
+            return const DashboardScreen();
+          default:
+            return const UnknownPage();
+        }
+      },
+    )
+
+/// 2: Navigate to MxCryptoScreen of mx_crypto_ui package
+Navigator.pushNamed(context, MxCryptoScreen.route);
+
 ```
 
----
-## 🔥 Package Diagram
-<img src="https://github.com/ThuyenPV/mx-flutter-components/blob/main/screenshots/system.png" alt="mx package diagram" width="100%" height="auto"/>
-
-
-## 🔥 Demo Video
+## Preview
 |                                                                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![fullscreen](screenshots/demo_video.gif)
 |                                                                                                                                                          |
 
-
-We're genuinely happy when received the feedback from all ❤️
+We're genuinely happy when received feedback from all ❤️
